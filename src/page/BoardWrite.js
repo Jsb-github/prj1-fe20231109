@@ -15,6 +15,7 @@ export function BoardWrite() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [writer, setWriter] = useState("");
+  // const [board, setBoard] = useState({ title: "", content: "", writer: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
   let toast = useToast();
   let navigate = useNavigate();
