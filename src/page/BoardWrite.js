@@ -17,8 +17,8 @@ export function BoardWrite() {
   const [writer, setWriter] = useState("");
   // const [board, setBoard] = useState({ title: "", content: "", writer: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  let toast = useToast();
-  let navigate = useNavigate();
+  const toast = useToast();
+  const navigate = useNavigate();
   function handleSubmit() {
     setIsSubmitting(true);
 
