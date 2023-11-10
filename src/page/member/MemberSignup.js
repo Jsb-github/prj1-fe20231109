@@ -17,11 +17,11 @@ function MemberSignup(props) {
 
   let submitAvailable = false;
 
-  if (password != passwordCheck) {
+  if (password !== passwordCheck) {
     submitAvailable = false;
   }
 
-  if (password.length == 0) {
+  if (password.length === 0) {
     submitAvailable = false;
   }
   function handleSubmit() {
@@ -48,7 +48,7 @@ function MemberSignup(props) {
         />
         <FormErrorMessage>암호를 입력해주세요</FormErrorMessage>
       </FormControl>
-      <FormControl isInvalid={password != passwordCheck}>
+      <FormControl isInvalid={password !== passwordCheck}>
         <FormLabel>password 확인</FormLabel>
         <Input
           type="password"
