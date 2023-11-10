@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import {
   Box,
   Button,
+  Flex,
   FormControl,
   FormErrorMessage,
   FormLabel,
@@ -14,16 +15,9 @@ function MemberSignup(props) {
   const [password, setPassword] = useState("");
   const [passwordCheck, setPasswordCheck] = useState("");
   const [email, setEmail] = useState("");
-
+  const [idAvailable, setIdAvailable] = useState(false);
   let submitAvailable = false;
 
-  if (password !== passwordCheck) {
-    submitAvailable = false;
-  }
-
-  if (password.length === 0) {
-    submitAvailable = false;
-  }
   function handleSubmit() {
     axios
       .post("/api/member/signup", { id, password, email })
@@ -32,12 +26,49 @@ function MemberSignup(props) {
       .finally(() => console.log("done"));
   }
 
+  function handleIdCheck() {
+    const searchParams = new URLSearchParams();
+    searchParams.set("id", id);
+    console.log(searchParams.toString());
+    axios
+      .get(`/api/member/check?${searchParams.toString()}`)
+      .then(() => setIdAvailable(false))
+      .catch((error) => {
+        if (error.response.status === 404) {
+          setIdAvailable(true);
+        }
+      });
+  }
+
+  if (password !== passwordCheck) {
+    submitAvailable = false;
+  }
+
+  if (password.length === 0) {
+    submitAvailable = false;
+  }
+
+  if (!idAvailable) {
+    submitAvailable = false;
+  }
+
   return (
     <Box>
       <h1>회원가입</h1>
-      <FormControl>
+      <FormControl isInvalid={!idAvailable}>
         <FormLabel>id</FormLabel>
-        <Input type="text" value={id} onChange={(e) => setId(e.target.value)} />
+        <Flex>
+          <Input
+            type="text"
+            value={id}
+            onChange={(e) => {
+              setId(e.target.value);
+              setIdAvailable(false);
+            }}
+          />
+          <Button onClick={handleIdCheck}>중복 확인</Button>
+        </Flex>
+        <FormErrorMessage>Id 중복체크를 해주세요.</FormErrorMessage>
       </FormControl>
       <FormControl isInvalid={password.length === 0}>
         <FormLabel>password</FormLabel>
