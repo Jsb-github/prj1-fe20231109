@@ -7,6 +7,7 @@ import {
   FormErrorMessage,
   FormLabel,
   Input,
+  useToast,
 } from "@chakra-ui/react";
 import axios from "axios";
 
@@ -16,6 +17,8 @@ function MemberSignup(props) {
   const [passwordCheck, setPasswordCheck] = useState("");
   const [email, setEmail] = useState("");
   const [idAvailable, setIdAvailable] = useState(false);
+  const [emailAvailable, setEmailAvailable] = useState(false);
+  const toast = useToast();
   let submitAvailable = false;
 
   function handleSubmit() {
@@ -32,11 +35,47 @@ function MemberSignup(props) {
     console.log(searchParams.toString());
     axios
       .get(`/api/member/check?${searchParams.toString()}`)
-      .then(() => setIdAvailable(false))
+      .then(() => {
+        toast({
+          description: "이미 사용 중인 ID입니다.",
+          status: "warning",
+          colorScheme: "red",
+        });
+        setIdAvailable(false);
+      })
       .catch((error) => {
         if (error.response.status === 404) {
+          toast({
+            description: "사용 가능한 ID입니다.",
+            status: "success",
+          });
           setIdAvailable(true);
         }
+      });
+  }
+
+  function handleEmailChk() {
+    const searchParams = new URLSearchParams();
+    searchParams.set("email", email);
+    console.log(searchParams.toString());
+    axios
+      .get(`/api/member/check?${searchParams.toString()}`)
+      .then(() => {
+        toast({
+          description: "이미 사용 중인  email입니다.",
+          status: "warning",
+          colorScheme: "red",
+        });
+        setEmailAvailable(false);
+      })
+      .catch((err) => {
+        if (err.response.status === 404) {
+          toast({
+            description: "사용가능한 email 입니다.",
+            status: "success",
+          });
+        }
+        setEmailAvailable(true);
       });
   }
 
@@ -49,6 +88,10 @@ function MemberSignup(props) {
   }
 
   if (!idAvailable) {
+    submitAvailable = false;
+  }
+
+  if (!emailAvailable) {
     submitAvailable = false;
   }
 
@@ -88,13 +131,20 @@ function MemberSignup(props) {
         />
         <FormErrorMessage>암호가 다릅니다.</FormErrorMessage>
       </FormControl>
-      <FormControl>
+      <FormControl isInvalid={!emailAvailable}>
         <FormLabel>email</FormLabel>
-        <Input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
+        <Flex>
+          <Input
+            type="email"
+            value={email}
+            onChange={(e) => {
+              setEmail(e.target.value);
+              setEmailAvailable(false);
+            }}
+          />
+          <Button onClick={handleEmailChk}>이메일 중복확인</Button>
+        </Flex>
+        <FormErrorMessage>이메일 중복체크를 해주세요</FormErrorMessage>
       </FormControl>
       <Button
         onClick={handleSubmit}
