@@ -10,6 +10,7 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function MemberSignup(props) {
   const [id, setId] = useState("");
@@ -19,13 +20,31 @@ function MemberSignup(props) {
   const [idAvailable, setIdAvailable] = useState(false);
   const [emailAvailable, setEmailAvailable] = useState(false);
   const toast = useToast();
-  let submitAvailable = false;
-
+  let submitAvailable = true;
+  const navigate = useNavigate();
   function handleSubmit() {
     axios
       .post("/api/member/signup", { id, password, email })
-      .then(() => console.log("good"))
-      .catch(() => console.log("err"))
+      .then(() => {
+        toast({
+          description: "회원가입 완료되었습니다.",
+          status: "success",
+        });
+        navigate("/");
+      })
+      .catch((err) => {
+        if (err.response.status === 400) {
+          toast({
+            description: "회원 내용을 확인해주세요",
+            status: "warning",
+          });
+        } else {
+          toast({
+            description: "서버 저장 중 에러가 발생했습니다.",
+            status: "error",
+          });
+        }
+      })
       .finally(() => console.log("done"));
   }
 
