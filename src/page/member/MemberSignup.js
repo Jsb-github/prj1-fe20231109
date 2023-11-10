@@ -35,7 +35,7 @@ function MemberSignup(props) {
       .catch((err) => {
         if (err.response.status === 400) {
           toast({
-            description: "회원 내용을 확인해주세요",
+            description: "입력값을 확인해주세요",
             status: "warning",
           });
         } else {
