@@ -34,6 +34,7 @@ function BoardEdit(props) {
     axios
       .get(`/api/board/id/${id}`)
       .then((response) => updateBoard(response.data));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   function handleUpdate() {
@@ -58,14 +59,7 @@ function BoardEdit(props) {
             status: "error",
           });
         }
-      })
-
-      .finally(() =>
-        toast({
-          description: "끝",
-          status: "success",
-        }),
-      );
+      });
   }
 
   if (board === null) {
@@ -117,7 +111,7 @@ function BoardEdit(props) {
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>수정 확인</ModalHeader>
-          <ModalCloseButton />
+          <ModalCloseButton onClick={() => navigate(-1)} />
           <ModalBody>수정 하시겠습니까 ? </ModalBody>
           <ModalFooter>
             {/* navigate(-1) : 이전 경로로 이동 */}

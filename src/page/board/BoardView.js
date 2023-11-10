@@ -30,6 +30,7 @@ export function BoardView() {
     axios
       .get(`/api/board/id/${id}`)
       .then((response) => setBoard(response.data));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   if (board === null) {
     return <Spinner />;
