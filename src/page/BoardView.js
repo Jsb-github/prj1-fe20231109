@@ -42,6 +42,7 @@ export function BoardView() {
         toast({
           description: id + "번 게시물이 삭제되었습니다.",
           status: "success",
+          duration: 1000,
         });
         navigate("/");
       })
@@ -74,7 +75,9 @@ export function BoardView() {
         <FormLabel>작성일시</FormLabel>
         <Input value={board.inserted} readOnly />
       </FormControl>
-      <Button colorScheme="purple">수정</Button>
+      <Button colorScheme="purple" onClick={() => navigate(`/edit/${id}`)}>
+        수정
+      </Button>
       <Button colorScheme="red" onClick={onOpen}>
         삭제
       </Button>

@@ -28,6 +28,7 @@ export function BoardWrite() {
         toast({
           description: "새글이 저장되었습니다.",
           status: "success",
+          duration: 1000,
         });
         navigate("/");
       })
