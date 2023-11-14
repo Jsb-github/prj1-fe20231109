@@ -35,6 +35,7 @@ function MemberSignup(props) {
   const [emailMessage, setEmailMessage] = useState("");
   const [phoneMessage, setPhoneMessage] = useState("");
   const [birthMessage, setBirthMessage] = useState("");
+  const [nickNameMessage, setNickNameMessage] = useState("");
 
   // 유효성 검사
   const [isId, setIsId] = React.useState(false);
@@ -257,6 +258,17 @@ function MemberSignup(props) {
       setIsBirth(true);
     }
   };
+
+  function onChangeNickName(e) {
+    const currentNickName = e.target.value;
+    setNickName(currentNickName);
+    if (currentNickName.length < 1) {
+      setNickNameMessage("한글자 이상 입력하셔야 합니다.");
+    } else {
+      setNickNameMessage("중복확인 버튼을 클릭해주세요");
+    }
+  }
+
   return (
     <Box width="500px">
       <h1>회원 가입</h1>
@@ -290,16 +302,13 @@ function MemberSignup(props) {
         <p>{passwordMessage}</p>
       </FormControl>
 
-      <FormControl isInvalid={!nickNameAvailable}>
-        <FormLabel>nick name</FormLabel>
+      <FormControl>
         <Flex>
           <Input
             type="text"
             value={nickName}
-            onChange={(e) => {
-              setNickName(e.target.value);
-              setNickNameAvailable(false);
-            }}
+            onChange={onChangeNickName}
+            placeholder="닉네임을 입력해주세요"
           ></Input>
           <Button
             onClick={handleNickNameCheck}
@@ -309,7 +318,7 @@ function MemberSignup(props) {
             중복확인
           </Button>
         </Flex>
-        <FormErrorMessage>nickName 중복 체크를 해주세요.</FormErrorMessage>
+        <p>{nickNameMessage}</p>
       </FormControl>
       <FormControl>
         <Flex>

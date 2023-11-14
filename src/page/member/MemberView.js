@@ -32,7 +32,14 @@ export function MemberView() {
   useEffect(() => {
     axios
       .get("/api/member?" + params.toString())
-      .then((response) => setMember(response.data));
+      .then((response) => setMember(response.data))
+      .catch((err) => {
+        navigate("/login");
+        toast({
+          description: "권한이 없습니다.",
+          status: "warning",
+        });
+      });
   }, []);
 
   if (member === null) {
@@ -54,13 +61,16 @@ export function MemberView() {
           status: "success",
         });
         navigate("/");
-
-        // TODO : 로그아웃 기능 추가하기
       })
       .catch((error) => {
-        if (error.response.status === 401 || error.response.status === 403) {
+        if (error.response.status === 401) {
           toast({
-            description: "권한이 없습니다.",
+            description: "수정 권한이 없습니다.",
+            status: "error",
+          });
+        } else if (error.response.status === 403) {
+          toast({
+            description: "로그인후 이용해주세요.",
             status: "error",
           });
         } else {
@@ -82,7 +92,7 @@ export function MemberView() {
       </FormControl>
       <FormControl>
         <FormLabel>별명</FormLabel>
-        <Input value={member.nickName}></Input>
+        <Input value={member.nickName} readOnly />
       </FormControl>
       <FormControl>
         <FormLabel>email</FormLabel>

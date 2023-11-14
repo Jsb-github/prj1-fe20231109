@@ -102,36 +102,6 @@ export function MemberEdit() {
         }
       });
   }
-
-  function handleSubmit() {
-    // put /api/member/edit
-    // {id, password, email, nickName}
-
-    axios
-      .put("/api/member/edit", { id: member.id, password, email, nickName })
-      .then(() => {
-        toast({
-          description: "회원정보가 수정되었습니다.",
-          status: "success",
-        });
-        navigate("/member?" + params.toString());
-      })
-      .catch((error) => {
-        if (error.response.status === 401 || error.response.status === 403) {
-          toast({
-            description: "수정 권한이 없습니다.",
-            status: "error",
-          });
-        } else {
-          toast({
-            description: "수정중에 문제가 발생하였습니다.",
-            status: "error",
-          });
-        }
-      })
-      .finally(() => onClose());
-  }
-
   function handleNickNameCheck() {
     const params = new URLSearchParams();
     params.set("nickName", nickName);
@@ -154,6 +124,39 @@ export function MemberEdit() {
           });
         }
       });
+  }
+  function handleSubmit() {
+    // put /api/member/edit
+    // {id, password, email, nickName}
+
+    axios
+      .put("/api/member/edit", { id: member.id, password, email, nickName })
+      .then(() => {
+        toast({
+          description: "회원정보가 수정되었습니다.",
+          status: "success",
+        });
+        navigate("/member?" + params.toString());
+      })
+      .catch((error) => {
+        if (error.response.status === 401) {
+          toast({
+            description: "수정 권한이 없습니다.",
+            status: "error",
+          });
+        } else if (error.response.status === 403) {
+          toast({
+            description: "로그인후 이용해주세요.",
+            status: "error",
+          });
+        } else {
+          toast({
+            description: "수정중에 문제가 발생하였습니다.",
+            status: "error",
+          });
+        }
+      })
+      .finally(() => onClose());
   }
 
   return (

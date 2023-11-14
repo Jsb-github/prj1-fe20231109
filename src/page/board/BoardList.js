@@ -36,7 +36,7 @@ export function BoardList() {
             <Tr>
               <Th>id</Th>
               <Th>title</Th>
-              <Th>by</Th>
+              <Th>닉네임</Th>
               <Th>at</Th>
             </Tr>
           </Thead>
@@ -51,7 +51,7 @@ export function BoardList() {
               >
                 <Td>{board.id}</Td>
                 <Td>{board.title}</Td>
-                <Td>{board.writer}</Td>
+                <Td>{board.nickName}</Td>
                 <Td>{board.inserted}</Td>
               </Tr>
             ))}
