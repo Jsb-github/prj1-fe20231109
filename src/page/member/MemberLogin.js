@@ -8,7 +8,7 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import axios from "axios";
-import { LoginContext } from "../../App";
+import { LoginContext } from "../../component/LoginProvider";
 import { useNavigate } from "react-router-dom";
 
 function MemberLogin(props) {

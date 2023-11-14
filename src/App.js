@@ -16,7 +16,8 @@ import { MemberView } from "./page/member/MemberView";
 import { MemberEdit } from "./page/member/MemberEdit";
 import { BoardList } from "./page/board/BoardList";
 import MemberLogin from "./page/member/MemberLogin";
-import axios from "axios";
+
+import LoginProvider from "./component/LoginProvider";
 
 const routes = createBrowserRouter(
   createRoutesFromElements(
@@ -36,27 +37,11 @@ const routes = createBrowserRouter(
   ),
 );
 
-export const LoginContext = createContext(null);
-
 function App(props) {
-  const [login, setLogin] = useState("");
-
-  useEffect(() => {
-    fetchLogin();
-  }, []);
-  function fetchLogin() {
-    axios.get("/api/member/login").then((response) => setLogin(response.data));
-  }
-
-  function isAuthenticated() {
-    return login !== "";
-  }
-
-  console.log(login);
   return (
-    <LoginContext.Provider value={{ login, fetchLogin, isAuthenticated }}>
+    <LoginProvider>
       <RouterProvider router={routes} />;
-    </LoginContext.Provider>
+    </LoginProvider>
   );
 }
 

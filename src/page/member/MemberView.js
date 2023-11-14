@@ -1,5 +1,5 @@
 import { useNavigate, useSearchParams } from "react-router-dom";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   Box,
   FormControl,
@@ -18,6 +18,7 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import axios from "axios";
+import { LoginContext } from "../../component/LoginProvider";
 
 export function MemberView() {
   const [member, setMember] = useState(null);
@@ -25,7 +26,7 @@ export function MemberView() {
   const [params] = useSearchParams();
 
   const { isOpen, onClose, onOpen } = useDisclosure();
-
+  const { hasAccess, isAdmin } = useContext(LoginContext);
   const navigate = useNavigate();
   const toast = useToast();
 
@@ -98,15 +99,20 @@ export function MemberView() {
         <FormLabel>email</FormLabel>
         <Input value={member.email} readOnly />
       </FormControl>
-      <Button
-        colorScheme="purple"
-        onClick={() => navigate("/member/edit?" + params.toString())}
-      >
-        수정
-      </Button>
-      <Button colorScheme="red" onClick={onOpen}>
-        탈퇴
-      </Button>
+
+      {(hasAccess(member.id) || isAdmin()) && (
+        <Box>
+          <Button
+            colorScheme="purple"
+            onClick={() => navigate("/member/edit?" + params.toString())}
+          >
+            수정
+          </Button>
+          <Button colorScheme="red" onClick={onOpen}>
+            탈퇴
+          </Button>
+        </Box>
+      )}
 
       {/* 탈퇴 모달 */}
       <Modal isOpen={isOpen} onClose={onClose}>
