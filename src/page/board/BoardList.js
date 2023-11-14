@@ -14,18 +14,19 @@ import { useNavigate } from "react-router-dom";
 
 export function BoardList() {
   const [boardList, setBoardList] = useState(null);
-  let navigate = useNavigate();
+
+  const navigate = useNavigate();
+
   useEffect(() => {
     axios
       .get("/api/board/list")
       .then((response) => setBoardList(response.data));
-    // .catch((err) => console.log(err))
-    // .finally(() => console.log("끝"));
   }, []);
 
   if (boardList === null) {
     return <Spinner />;
   }
+
   return (
     <Box>
       <h1>게시물 목록</h1>
@@ -46,7 +47,7 @@ export function BoardList() {
                   cursor: "pointer",
                 }}
                 key={board.id}
-                onClick={() => navigate(`/board/${board.id}`)}
+                onClick={() => navigate("/board/" + board.id)}
               >
                 <Td>{board.id}</Td>
                 <Td>{board.title}</Td>

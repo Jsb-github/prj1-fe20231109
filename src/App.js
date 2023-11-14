@@ -6,11 +6,16 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import { BoardWrite } from "./page/board/BoardWrite";
-import { BoardList } from "./page/board/BoardList";
+
 import { HomeLayout } from "./layout/HomeLayout";
 import { BoardView } from "./page/board/BoardView";
 import BoardEdit from "./page/board/BoardEdit";
 import MemberSignup from "./page/member/MemberSignup";
+import { MemberList } from "./page/member/MemberList";
+import { MemberView } from "./page/member/MemberView";
+import { MemberEdit } from "./page/member/MemberEdit";
+import { BoardList } from "./page/board/BoardList";
+import MemberLogin from "./page/member/MemberLogin";
 
 const routes = createBrowserRouter(
   createRoutesFromElements(
@@ -21,6 +26,11 @@ const routes = createBrowserRouter(
       <Route path="board/:id" element={<BoardView />} />
       <Route path="edit/:id" element={<BoardEdit />} />
       <Route path="signup" element={<MemberSignup />} />
+      <Route path="member/List" element={<MemberList />} />
+      <Route path="member" element={<MemberView />} />
+      <Route path="member/edit" element={<MemberEdit />} />
+      <Route path="member/edit" element={<MemberEdit />} />
+      <Route path="login" element={<MemberLogin />} />
     </Route>,
   ),
 );
