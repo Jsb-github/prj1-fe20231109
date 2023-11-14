@@ -19,7 +19,7 @@ function MemberSignup(props) {
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
-  const [gender, setGender] = useState("");
+  const [gender, setGender] = useState("남성");
   const [email, setEmail] = useState("");
   const [birth, setBirth] = useState("");
   const [phone, setPhone] = useState("");
@@ -27,6 +27,7 @@ function MemberSignup(props) {
   const [emailAvailable, setEmailAvailable] = useState(false);
   const [nickName, setNickName] = useState("");
   const [nickNameAvailable, setNickNameAvailable] = useState(false);
+
   // 오류메시지 상태 저장
   const [idMessage, setIdMessage] = useState("");
   const [nameMessage, setNameMessage] = useState("");
@@ -45,11 +46,20 @@ function MemberSignup(props) {
   //check box 상태 채크
   const [checkedBox, setCheckedBox] = useState(false);
   const toast = useToast();
-  let submitAvailable = true;
+
   const navigate = useNavigate();
   function handleSubmit() {
     axios
-      .post("/api/member/signup", { id, password, email })
+      .post("/api/member/signup", {
+        id,
+        password,
+        name,
+        email,
+        gender,
+        birth,
+        phone,
+        nickName,
+      })
       .then(() => {
         toast({
           description: "회원가입 완료되었습니다.",
@@ -122,29 +132,7 @@ function MemberSignup(props) {
         setEmailAvailable(true);
       });
   }
-  function handleNickNameCheck() {
-    const params = new URLSearchParams();
-    params.set("nickName", nickName);
 
-    axios
-      .get("/api/member/check?" + params)
-      .then(() => {
-        setNickNameAvailable(false);
-        toast({
-          description: "이미 사용 중인 별명입니다.",
-          status: "warning",
-        });
-      })
-      .catch((error) => {
-        if (error.response.status === 404) {
-          setNickNameAvailable(true);
-          toast({
-            description: "사용 가능한 별명입니다.",
-            status: "success",
-          });
-        }
-      });
-  }
   function handleNickNameCheck() {
     const params = new URLSearchParams();
     params.set("nickName", nickName);
@@ -313,7 +301,13 @@ function MemberSignup(props) {
               setNickNameAvailable(false);
             }}
           ></Input>
-          <Button onClick={handleNickNameCheck}>중복확인</Button>
+          <Button
+            onClick={handleNickNameCheck}
+            colorScheme={nickName ? "blue" : "red"}
+            isDisabled={!nickName}
+          >
+            중복확인
+          </Button>
         </Flex>
         <FormErrorMessage>nickName 중복 체크를 해주세요.</FormErrorMessage>
       </FormControl>
@@ -426,7 +420,8 @@ function MemberSignup(props) {
             isBirth &&
             isPassword &&
             isPhone &&
-            checkedBox
+            checkedBox &&
+            nickNameAvailable
           )
         }
         onClick={handleSubmit}

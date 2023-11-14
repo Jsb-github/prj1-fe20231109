@@ -30,6 +30,7 @@ function BoardEdit(props) {
   const navigate = useNavigate();
 
   const toast = useToast();
+
   useEffect(() => {
     axios
       .get(`/api/board/id/${id}`)
@@ -51,6 +52,16 @@ function BoardEdit(props) {
         if (err.response.status === 400) {
           toast({
             description: "수정 내용 확인해주세요",
+            status: "error",
+          });
+        } else if (err.response.status === 401) {
+          toast({
+            description: "로그인후 이용해주세요.",
+            status: "error",
+          });
+        } else if (err.response.status === 403) {
+          toast({
+            description: "다른 사람 글은 수정할수 없습니다..",
             status: "error",
           });
         } else {
@@ -91,17 +102,7 @@ function BoardEdit(props) {
           }
         />
       </FormControl>
-      <FormControl>
-        <FormLabel>작성자</FormLabel>
-        <Input
-          value={board.writer}
-          onChange={(e) =>
-            updateBoard((draft) => {
-              draft.writer = e.target.value;
-            })
-          }
-        />
-      </FormControl>
+
       <Button colorScheme="blue" onClick={onOpen}>
         수정
       </Button>

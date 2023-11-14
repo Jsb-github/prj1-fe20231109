@@ -14,7 +14,6 @@ import { useNavigate } from "react-router-dom";
 export function BoardWrite() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [writer, setWriter] = useState("");
   // const [board, setBoard] = useState({ title: "", content: "", writer: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const toast = useToast();
@@ -23,7 +22,7 @@ export function BoardWrite() {
     setIsSubmitting(true);
 
     axios
-      .post("/api/board/add", { title, content, writer })
+      .post("/api/board/add", { title, content })
       .then(() => {
         toast({
           description: "새글이 저장되었습니다.",
@@ -37,6 +36,11 @@ export function BoardWrite() {
         if (error.response.status === 400) {
           toast({
             description: "작성한 내용을 확인해주세요.",
+            status: "error",
+          });
+        } else if (error.response.status === 401) {
+          toast({
+            description: "로그인후 이용해주세요.",
             status: "error",
           });
         } else {
@@ -63,10 +67,6 @@ export function BoardWrite() {
             value={content}
             onChange={(e) => setContent(e.target.value)}
           ></Textarea>
-        </FormControl>
-        <FormControl>
-          <FormLabel>작성자</FormLabel>
-          <Input value={writer} onChange={(e) => setWriter(e.target.value)} />
         </FormControl>
         <Button color="blue" onClick={handleSubmit} isDisabled={isSubmitting}>
           저장
