@@ -11,6 +11,11 @@ export function NavBar() {
   const { fetchLogin, login, isAuthenticated, isAdmin } =
     useContext(LoginContext);
 
+  const urlParams = new URLSearchParams();
+
+  if (login != "") {
+    urlParams.set("id", login.id);
+  }
   function handleLogout() {
     axios
       .post("/api/member/logout")
@@ -30,6 +35,9 @@ export function NavBar() {
       {isAuthenticated() ? (
         <>
           <Button onClick={() => navigate("/write")}>write </Button>
+          <Button onClick={() => navigate(`/member?${urlParams}`)}>
+            회원정보
+          </Button>
           <Button onClick={handleLogout}>로그아웃</Button>
         </>
       ) : (

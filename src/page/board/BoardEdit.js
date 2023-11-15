@@ -61,7 +61,7 @@ function BoardEdit(props) {
           });
         } else if (err.response.status === 403) {
           toast({
-            description: "다른 사람 글은 수정할수 없습니다..",
+            description: "수정 권한이 없습니다..",
             status: "error",
           });
         } else {

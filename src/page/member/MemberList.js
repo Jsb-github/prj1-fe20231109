@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import {
   Box,
   Spinner,
@@ -11,12 +11,13 @@ import {
 } from "@chakra-ui/react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { LoginContext } from "../../component/LoginProvider";
 
 export function MemberList() {
   const [list, setList] = useState(null);
 
   const navigate = useNavigate();
-
+  const { hasAccess, isAdmin } = useContext(LoginContext);
   useEffect(() => {
     axios.get("/api/member/list").then((response) => setList(response.data));
   }, []);
@@ -48,23 +49,24 @@ export function MemberList() {
           </Tr>
         </Thead>
         <Tbody>
-          {list.map((member) => (
-            <Tr
-              _hover={{ cursor: "pointer" }}
-              onClick={() => handleTableRowClick(member.id)}
-              key={member.id}
-            >
-              <Td>{member.id}</Td>
-              <Td>{member.email}</Td>
-              <Td>{member.name}</Td>
-              <Td>{member.nickName}</Td>
-              <Td>{member.gender}</Td>
-              <Td>{member.birth}</Td>
-              <Td>{member.phone}</Td>
-              <Td>{member.inserted}</Td>
-              <Td>{member.grade}</Td>
-            </Tr>
-          ))}
+          {isAdmin() &&
+            list.map((member) => (
+              <Tr
+                _hover={{ cursor: "pointer" }}
+                onClick={() => handleTableRowClick(member.id)}
+                key={member.id}
+              >
+                <Td>{member.id}</Td>
+                <Td>{member.email}</Td>
+                <Td>{member.name}</Td>
+                <Td>{member.nickName}</Td>
+                <Td>{member.gender}</Td>
+                <Td>{member.birth}</Td>
+                <Td>{member.phone}</Td>
+                <Td>{member.inserted}</Td>
+                <Td>{member.grade}</Td>
+              </Tr>
+            ))}
         </Tbody>
       </Table>
     </Box>
