@@ -43,7 +43,12 @@ function CommentForm({ boardId, isSubmitting, onSubmit }) {
   );
 }
 
-function CommentList({ commentList, onDeleteModalOpen, isSubmitting }) {
+function CommentList({
+  commentList,
+  onDeleteModalOpen,
+  isSubmitting,
+  setIsSubmitting,
+}) {
   return (
     <Card>
       <CardHeader>
@@ -56,6 +61,8 @@ function CommentList({ commentList, onDeleteModalOpen, isSubmitting }) {
               key={comment.id}
               comment={comment}
               onDeleteModalOpen={onDeleteModalOpen}
+              isSubmitting={isSubmitting}
+              setIsSubmitting={setIsSubmitting}
             />
           ))}
         </Stack>
@@ -64,37 +71,63 @@ function CommentList({ commentList, onDeleteModalOpen, isSubmitting }) {
   );
 }
 
-function CommentItem({ comment, onDeleteModalOpen }) {
+function CommentItem({ comment, onDeleteModalOpen, setIsSubmitting }) {
   const [isEditing, setIsEditing] = useState(false);
   const [commentEdited, setCommentEdited] = useState(comment.comment);
   const toast = useToast();
-  const navigate = useNavigate();
+
   const { hasAccess, isAdmin } = useContext(LoginContext);
   function handleSubmit() {
+    // TODO : 댓글 list refesh
+    // TODO : textarea 닫기
+    // TODO : 응답 코드에 따른 기능들 추가
+    setIsSubmitting(true);
     axios
-      .put(`/api/comment/update`, { id: comment.id, comment: commentEdited })
+      .put(`/api/comment/edit`, { id: comment.id, comment: commentEdited })
       .then((response) => {
         toast({
-          description: "수정 성공 했습니다",
+          description: "댓글 수정 성공 했습니다",
           status: "success",
         });
-        navigate("/");
       })
-      .catch(() => console.log("실패"))
-      .finally(() => console.log("끝"));
+      .catch((error) => {
+        if (error.response.status === 401 || error.response.status === 403) {
+          toast({
+            description: "권한이 없습니다.",
+            status: "warning",
+          });
+        } else if (error.response.status === 400) {
+          toast({
+            description: "입력값을 확인해주세요",
+            status: "warning",
+          });
+        } else {
+          toast({
+            description: "서버에 문제가 발생했씁니다.",
+            status: "error",
+          });
+        }
+      })
+      .finally(() => {
+        setIsEditing(false);
+        setIsSubmitting(false);
+      });
   }
 
   return (
     <Box>
       <Flex justifyContent="space-between">
-        <Heading size="xs">{comment.memberId}</Heading>
+        <Heading size="xs">{comment.nickName}</Heading>
         <Text fontSize="xs">{comment.inserted}</Text>
       </Flex>
       <Flex justifyContent="space-between" alignItems="center">
         <Box flex={1}>
-          <Text sx={{ whiteSpace: "pre-wrap" }} pt="2" fontSize="sm">
-            {comment.comment}
-          </Text>
+          {isEditing || (
+            <Text sx={{ whiteSpace: "pre-wrap" }} pt="2" fontSize="sm">
+              {comment.comment}
+            </Text>
+          )}
+
           {isEditing && (
             <Box>
               <Textarea
@@ -245,6 +278,7 @@ export function CommentContainer({ boardId }) {
       <CommentList
         boardId={boardId}
         isSubmitting={isSubmitting}
+        setIsSubmitting={setIsSubmitting}
         commentList={commentList}
         onDeleteModalOpen={handleDeleteModalOpen}
       />
