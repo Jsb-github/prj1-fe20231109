@@ -1,4 +1,3 @@
-import React, { createContext, useEffect, useState } from "react";
 import {
   createBrowserRouter,
   createRoutesFromElements,
@@ -18,7 +17,6 @@ import { BoardList } from "./page/board/BoardList";
 import MemberLogin from "./page/member/MemberLogin";
 
 import LoginProvider from "./component/LoginProvider";
-import { CommentEdit } from "./component/CommentEdit";
 
 const routes = createBrowserRouter(
   createRoutesFromElements(
@@ -33,7 +31,7 @@ const routes = createBrowserRouter(
       <Route path="member" element={<MemberView />} />
       <Route path="member/edit" element={<MemberEdit />} />
       <Route path="member/edit" element={<MemberEdit />} />
-      <Route path="comment/edit/:id" element={<CommentEdit />} />
+      {/*<Route path="comment/edit/:id" element={<CommentEdit />} />*/}
       <Route path="login" element={<MemberLogin />} />
     </Route>,
   ),

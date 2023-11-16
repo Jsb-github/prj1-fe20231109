@@ -44,8 +44,6 @@ function CommentForm({ boardId, isSubmitting, onSubmit }) {
 }
 
 function CommentList({ commentList, onDeleteModalOpen, isSubmitting }) {
-  const { hasAccess, isAdmin } = useContext(LoginContext);
-  const navigate = useNavigate();
   return (
     <Card>
       <CardHeader>
@@ -67,9 +65,24 @@ function CommentList({ commentList, onDeleteModalOpen, isSubmitting }) {
 }
 
 function CommentItem({ comment, onDeleteModalOpen }) {
-  const { hasAccess, isAdmin } = useContext(LoginContext);
   const [isEditing, setIsEditing] = useState(false);
   const [commentEdited, setCommentEdited] = useState(comment.comment);
+  const toast = useToast();
+  const navigate = useNavigate();
+  const { hasAccess, isAdmin } = useContext(LoginContext);
+  function handleSubmit() {
+    axios
+      .put(`/api/comment/update`, { id: comment.id, comment: commentEdited })
+      .then((response) => {
+        toast({
+          description: "수정 성공 했습니다",
+          status: "success",
+        });
+        navigate("/");
+      })
+      .catch(() => console.log("실패"))
+      .finally(() => console.log("끝"));
+  }
 
   return (
     <Box>
@@ -83,10 +96,15 @@ function CommentItem({ comment, onDeleteModalOpen }) {
             {comment.comment}
           </Text>
           {isEditing && (
-            <Textarea
-              value={commentEdited}
-              onChange={(e) => setCommentEdited(e.target.value)}
-            />
+            <Box>
+              <Textarea
+                value={commentEdited}
+                onChange={(e) => setCommentEdited(e.target.value)}
+              />
+              <Button colorScheme="blue" onClick={handleSubmit}>
+                저장
+              </Button>
+            </Box>
           )}
         </Box>
 
