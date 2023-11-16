@@ -38,7 +38,13 @@ function LoginProvider({ children }) {
 
   return (
     <LoginContext.Provider
-      value={{ login, fetchLogin, isAuthenticated, hasAccess, isAdmin }}
+      value={{
+        login,
+        fetchLogin,
+        isAuthenticated,
+        hasAccess,
+        isAdmin,
+      }}
     >
       {children}
     </LoginContext.Provider>

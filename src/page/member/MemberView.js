@@ -61,6 +61,7 @@ export function MemberView() {
           description: "회원 탈퇴하였습니다.",
           status: "success",
         });
+
         navigate("/");
       })
       .catch((error) => {

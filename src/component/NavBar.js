@@ -1,8 +1,8 @@
 import { Button, Flex, useToast } from "@chakra-ui/react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { LoginContext } from "./LoginProvider";
 
 export function NavBar() {
@@ -12,21 +12,22 @@ export function NavBar() {
     useContext(LoginContext);
 
   const urlParams = new URLSearchParams();
+  const location = useLocation();
+  useEffect(() => {
+    fetchLogin();
+  }, [location]);
 
   if (login != "") {
     urlParams.set("id", login.id);
   }
   function handleLogout() {
-    axios
-      .post("/api/member/logout")
-      .then(() => {
-        toast({
-          description: "로그아웃 되었습니다.",
-          status: "info",
-        });
-        navigate("/");
-      })
-      .finally(() => fetchLogin());
+    axios.post("/api/member/logout").then(() => {
+      toast({
+        description: "로그아웃 되었습니다.",
+        status: "info",
+      });
+      navigate("/");
+    });
   }
 
   return (
