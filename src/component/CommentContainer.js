@@ -22,8 +22,9 @@ import {
 } from "@chakra-ui/react";
 import axios from "axios";
 import React, { useContext, useEffect, useRef, useState } from "react";
-import loginProvider, { LoginContext } from "./LoginProvider";
-import { DeleteIcon } from "@chakra-ui/icons";
+import { LoginContext } from "./LoginProvider";
+import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
+import { useNavigate } from "react-router-dom";
 
 function CommentForm({ boardId, isSubmitting, onSubmit }) {
   const [comment, setComment] = useState("");
@@ -44,7 +45,7 @@ function CommentForm({ boardId, isSubmitting, onSubmit }) {
 
 function CommentList({ commentList, onDeleteModalOpen, isSubmitting }) {
   const { hasAccess, isAdmin } = useContext(LoginContext);
-
+  const navigate = useNavigate();
   return (
     <Card>
       <CardHeader>
@@ -63,14 +64,23 @@ function CommentList({ commentList, onDeleteModalOpen, isSubmitting }) {
                   {comment.comment}
                 </Text>
                 {(hasAccess(comment.memberId) || isAdmin()) && (
-                  <Button
-                    colorScheme="red"
-                    size="xs"
-                    isDisabled={isSubmitting}
-                    onClick={() => onDeleteModalOpen(comment.id)}
-                  >
-                    <DeleteIcon />
-                  </Button>
+                  <Box>
+                    <Button
+                      colorScheme="blue"
+                      size="xs"
+                      onClick={() => navigate(`/comment/edit/${comment.id}`)}
+                    >
+                      <EditIcon />
+                    </Button>
+                    <Button
+                      colorScheme="red"
+                      size="xs"
+                      isDisabled={isSubmitting}
+                      onClick={() => onDeleteModalOpen(comment.id)}
+                    >
+                      <DeleteIcon />
+                    </Button>
+                  </Box>
                 )}
               </Flex>
             </Box>
@@ -91,13 +101,14 @@ export function CommentContainer({ boardId }) {
   const { isOpen, onClose, onOpen } = useDisclosure();
   const toast = useToast();
   const { isAuthenticated } = useContext(LoginContext);
+
   function handleSubmit(comment) {
     setIsSubmitting(true);
     axios
       .post("/api/comment/add", comment)
       .then(() => {
         toast({
-          description: "댓글 작성 등록",
+          description: "댓글 작성 등록되었습니다.",
           status: "success",
         });
       })
@@ -127,8 +138,25 @@ export function CommentContainer({ boardId }) {
     //  TODO : 모달,then catch finally
     axios
       .delete(`/api/comment/${commentIdRef.current}`)
-      .then(() => console.log("성공"))
-      .catch(() => console.log("실패"))
+      .then(() =>
+        toast({
+          description: "댓글 삭제 성공",
+          status: "success",
+        }),
+      )
+      .catch((error) => {
+        if (error.response.status === 401 || error.response.status === 403) {
+          toast({
+            description: "권한이 없습니다.",
+            status: "warning",
+          });
+        } else {
+          toast({
+            description: "서버에서 문제가 발생했습니다.",
+            status: "error",
+          });
+        }
+      })
       .finally(() => {
         setIsSubmitting(false);
         onClose();
