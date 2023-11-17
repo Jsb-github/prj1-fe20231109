@@ -4,6 +4,17 @@ import axios from "axios";
 
 import { useContext, useEffect } from "react";
 import { LoginContext } from "./LoginProvider";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+import {
+  faArrowRightFromBracket,
+  faHouse,
+  faPenToSquare,
+  faRightToBracket,
+  faUser,
+  faUserPlus,
+  faUsers,
+} from "@fortawesome/free-solid-svg-icons";
 
 export function NavBar() {
   const toast = useToast();
@@ -32,24 +43,40 @@ export function NavBar() {
 
   return (
     <Flex>
-      <Button onClick={() => navigate("/")}>home</Button>
+      <Button onClick={() => navigate("/")}>
+        Home <FontAwesomeIcon icon={faHouse} />
+      </Button>
       {isAuthenticated() ? (
         <>
-          <Button onClick={() => navigate("/write")}>write </Button>
+          <Button onClick={() => navigate("/write")}>
+            write
+            <FontAwesomeIcon icon={faPenToSquare} />
+          </Button>
           <Button onClick={() => navigate(`/member?${urlParams}`)}>
             회원정보
+            <FontAwesomeIcon icon={faUser} />
           </Button>
-          <Button onClick={handleLogout}>로그아웃</Button>
+          {isAdmin() && (
+            <Button onClick={() => navigate("/member/List")}>
+              회원목록
+              <FontAwesomeIcon icon={faUsers} />
+            </Button>
+          )}
+          <Button onClick={handleLogout}>
+            로그아웃
+            <FontAwesomeIcon icon={faArrowRightFromBracket} />
+          </Button>
         </>
       ) : (
         <>
-          <Button onClick={() => navigate("/login")}>로그인</Button>
-          <Button onClick={() => navigate("/signup")}>signup</Button>
+          <Button onClick={() => navigate("/login")}>
+            로그인
+            <FontAwesomeIcon icon={faRightToBracket} />
+          </Button>
+          <Button onClick={() => navigate("/signup")}>
+            회원가입 <FontAwesomeIcon icon={faUserPlus} />
+          </Button>
         </>
-      )}
-
-      {isAdmin() && (
-        <Button onClick={() => navigate("/member/List")}>회원목록</Button>
       )}
     </Flex>
   );

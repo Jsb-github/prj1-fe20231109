@@ -9,9 +9,10 @@ function LoginProvider({ children }) {
     fetchLogin();
   }, []);
   function fetchLogin() {
+    console.log(login);
     axios.get("/api/member/login").then((response) => setLogin(response.data));
   }
-
+  console.log(login);
   function isAuthenticated() {
     return login !== "";
   }

@@ -4,8 +4,10 @@ import axios from "axios";
 import {
   Box,
   Button,
+  Flex,
   FormControl,
   FormLabel,
+  Heading,
   Input,
   Modal,
   ModalBody,
@@ -15,14 +17,46 @@ import {
   ModalHeader,
   ModalOverlay,
   Spinner,
+  Text,
+  Tooltip,
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
 import { LoginContext } from "../../component/LoginProvider";
 import { CommentContainer } from "../../component/CommentContainer";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHeart as emptyHeart } from "@fortawesome/free-regular-svg-icons";
+import { faHeart as fullHeart } from "@fortawesome/free-solid-svg-icons";
+
+function LikeContainer({ like, onClick }) {
+  const { isAuthenticated } = useContext(LoginContext);
+  if (like == null) {
+    return <Spinner />;
+  }
+  return (
+    <Flex gap={2}>
+      <Heading size="xl">{like.countLike}</Heading>
+      <Tooltip isDisabled={isAuthenticated()} hasArrow label={"로그인 하세요"}>
+        <Button variant="ghost" size="xl" onClick={onClick}>
+          {like.like && (
+            <Text>
+              <FontAwesomeIcon size="xl" icon={fullHeart} />
+            </Text>
+          )}
+          {like.like || (
+            <Text>
+              <FontAwesomeIcon size="xl" icon={emptyHeart} />
+            </Text>
+          )}
+        </Button>
+      </Tooltip>
+    </Flex>
+  );
+}
 
 export function BoardView() {
   const [board, setBoard] = useState(null);
+  const [like, setLike] = useState(null);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { id } = useParams();
@@ -30,16 +64,22 @@ export function BoardView() {
 
   const toast = useToast();
   const navigate = useNavigate();
+
   useEffect(() => {
     axios
       .get(`/api/board/id/${id}`)
       .then((response) => setBoard(response.data));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    axios
+      .get("/api/like/board/" + id)
+      .then((response) => setLike(response.data));
+  }, []);
   if (board === null) {
     return <Spinner />;
   }
-
   function handleDelete() {
     axios
       .delete(`/api/board/remove/${id}`)
@@ -60,9 +100,20 @@ export function BoardView() {
       .finally(() => onClose());
   }
 
+  function handleLike() {
+    axios
+      .post("/api/like", { boardId: board.id })
+      .then((response) => setLike(response.data))
+      .catch(() => console.log("실패"))
+      .finally(() => console.log("끝"));
+  }
+
   return (
     <Box>
-      <h1>{board.id}번 보기</h1>
+      <Flex justifyContent="space-between">
+        <Heading size="xl">{board.id}번 보기</Heading>
+        <LikeContainer like={like} onClick={handleLike} />
+      </Flex>
       {/* FormControl*3>FormLabel*3 */}
       <FormControl>
         <FormLabel>제목</FormLabel>
