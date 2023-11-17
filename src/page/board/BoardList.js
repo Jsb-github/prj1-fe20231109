@@ -23,12 +23,14 @@ import {
 
 export function BoardList() {
   const [boardList, setBoardList] = useState(null);
+  const [pageInfo, setPageInfo] = useState(null);
   const [params] = useSearchParams();
   const navigate = useNavigate();
   useEffect(() => {
-    axios
-      .get("/api/board/list?" + params)
-      .then((response) => setBoardList(response.data));
+    axios.get("/api/board/list?" + params).then((response) => {
+      setBoardList(response.data);
+      setPageInfo(response.data);
+    });
   }, [params]);
 
   if (boardList === null) {
