@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 import {
   Badge,
   Box,
+  Button,
+  Flex,
+  Input,
   Spinner,
   Table,
   Tbody,
@@ -11,18 +14,41 @@ import {
   Tr,
 } from "@chakra-ui/react";
 import axios from "axios";
-import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
+
 import { ChatIcon } from "@chakra-ui/icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { Pagination } from "./Pagination";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
+
+function SearchComponent() {
+  const [keyword, setKeyword] = useState("");
+  const navigate = useNavigate();
+
+  function handleSearch() {
+    // /?k=keyword
+    const params = new URLSearchParams();
+    params.set("k", keyword);
+
+    navigate("/?" + params);
+  }
+
+  return (
+    <Flex>
+      <Input value={keyword} onChange={(e) => setKeyword(e.target.value)} />
+      <Button onClick={handleSearch}>검색</Button>
+    </Flex>
+  );
+}
 
 export function BoardList() {
   const [boardList, setBoardList] = useState(null);
   const [pageInfo, setPageInfo] = useState(null);
+
   const [params] = useSearchParams();
   const navigate = useNavigate();
   const location = useLocation();
+
   useEffect(() => {
     axios.get("/api/board/list?" + params).then((response) => {
       setBoardList(response.data.boardList);
@@ -36,20 +62,17 @@ export function BoardList() {
 
   return (
     <Box>
-      <h1>게시물</h1>
+      <h1>게시물 목록</h1>
       <Box>
         <Table>
           <Thead>
             <Tr>
               <Th>id</Th>
               <Th>
-                {" "}
-                <FontAwesomeIcon size="xl" icon={faHeart} />
+                <FontAwesomeIcon icon={faHeart} />
               </Th>
               <Th>title</Th>
-
-              <Th>닉네임</Th>
-
+              <Th>by</Th>
               <Th>at</Th>
             </Tr>
           </Thead>
@@ -73,7 +96,6 @@ export function BoardList() {
                     </Badge>
                   )}
                 </Td>
-
                 <Td>{board.nickName}</Td>
                 <Td>{board.ago}</Td>
               </Tr>
@@ -81,6 +103,8 @@ export function BoardList() {
           </Tbody>
         </Table>
       </Box>
+
+      <SearchComponent />
       <Pagination pageInfo={pageInfo} />
     </Box>
   );

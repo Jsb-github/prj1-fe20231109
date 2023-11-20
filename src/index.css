@@ -1,0 +1,57 @@
+/* dark mode */
+.nav__theme-btn{
+    cursor : pointer;
+    width : 40px;
+    height : 40px;
+}
+
+.white {
+    transition: all 0.25s linear;
+    background-color: white;
+}
+
+
+.dark {
+    transition: all 0.25s linear;
+    background-color: #1e2937;
+    min-height: 100vh;
+}
+
+.dark a,
+.dark Table,
+.dark Th,
+.dark Button,
+.dark Box,
+.dark Input,
+.dark FormLabel,
+
+.dark .form__title ,
+.dark .post__title,
+.dark .post__navigation--active,
+.dark .post__author__name,
+.dark .footer__theme-btn,
+.dark .profile__name
+{
+    color: white;
+}
+
+.dark a:hover,
+.dark a:focus,
+.dark .post__text,
+.dark .post__text--pre--wrap,
+.dark .profile__email,
+.dark .post__date,
+.dark .form__block {
+    color: lightgray;
+}
+
+
+.dark .form__error{
+    color : #ff6a71;
+}
+
+
+.dark footer,
+.dark header{
+    background-color : #111827;
+}

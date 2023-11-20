@@ -11,7 +11,7 @@ import {
 } from "@chakra-ui/react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { LoginContext } from "../../component/LoginProvider";
+import { LoginContext } from "../../context/LoginProvider";
 
 export function MemberList() {
   const [list, setList] = useState(null);

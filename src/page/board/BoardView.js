@@ -22,8 +22,8 @@ import {
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
-import { LoginContext } from "../../component/LoginProvider";
-import { CommentContainer } from "../../component/CommentContainer";
+import { LoginContext } from "../../context/LoginProvider";
+import { CommentContainer } from "../../component/comment/CommentContainer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart as emptyHeart } from "@fortawesome/free-regular-svg-icons";
 import { faHeart as fullHeart } from "@fortawesome/free-solid-svg-icons";

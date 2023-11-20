@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 import { useContext, useEffect } from "react";
-import { LoginContext } from "./LoginProvider";
+import { LoginContext } from "../context/LoginProvider";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import {
@@ -15,6 +15,8 @@ import {
   faUserPlus,
   faUsers,
 } from "@fortawesome/free-solid-svg-icons";
+import { ThemeContext } from "../context/TemeContextProvider";
+import { BsMoonFill, BsSun } from "react-icons/bs";
 
 export function NavBar() {
   const toast = useToast();
@@ -22,13 +24,15 @@ export function NavBar() {
   const { fetchLogin, login, isAuthenticated, isAdmin } =
     useContext(LoginContext);
 
+  const context = useContext(ThemeContext);
+  console.log(context.theme);
   const urlParams = new URLSearchParams();
   const location = useLocation();
   useEffect(() => {
     fetchLogin();
   }, [location]);
 
-  if (login != "") {
+  if (login !== "") {
     urlParams.set("id", login.id);
   }
   function handleLogout() {
@@ -46,6 +50,8 @@ export function NavBar() {
       <Button onClick={() => navigate("/")}>
         Home <FontAwesomeIcon icon={faHouse} />
       </Button>
+      {}
+
       {isAuthenticated() ? (
         <>
           <Button onClick={() => navigate("/write")}>
@@ -77,6 +83,16 @@ export function NavBar() {
             회원가입 <FontAwesomeIcon icon={faUserPlus} />
           </Button>
         </>
+      )}
+
+      {context.theme === "light" ? (
+        <BsSun
+          size="xl"
+          onClick={context.toggleMode}
+          className="nav__theme-btn"
+        />
+      ) : (
+        <BsMoonFill onClick={context.toggleMode} className="nav__theme-btn" />
       )}
     </Flex>
   );

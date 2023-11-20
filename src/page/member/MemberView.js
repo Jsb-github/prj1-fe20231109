@@ -18,7 +18,7 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import axios from "axios";
-import { LoginContext } from "../../component/LoginProvider";
+import { LoginContext } from "../../context/LoginProvider";
 
 export function MemberView() {
   const [member, setMember] = useState(null);

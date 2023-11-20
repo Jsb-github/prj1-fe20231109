@@ -1,0 +1,58 @@
+import { Box, Button, Spinner, Text } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faChevronLeft,
+  faChevronRight,
+} from "@fortawesome/free-solid-svg-icons";
+
+export function CommentPagination({ pageInfo, setNowPage }) {
+  const pageNumbers = [];
+  const navigate = useNavigate();
+
+  if (pageInfo != null) {
+    for (let i = pageInfo.startPageNumber; i <= pageInfo.endPageNumber; i++) {
+      pageNumbers.push(i);
+    }
+  }
+
+  return (
+    <Box>
+      {/*{pageInfo.prevPageNumber > 0 && (*/}
+      {/*  <Button onClick={() => navigate("/?p=1")}>*/}
+      {/*    <FontAwesomeIcon icon={faAnglesLeft} />*/}
+      {/*  </Button>*/}
+      {/*)}*/}
+      {pageInfo.prevPageNumber > 0 && (
+        <Button
+          variant="ghost"
+          onClick={() => setNowPage(pageInfo.prevPageNumber)}
+        >
+          <FontAwesomeIcon icon={faChevronLeft} />
+        </Button>
+      )}
+      {pageNumbers.map((pageNumber) => (
+        <Button
+          key={pageNumber}
+          variant={
+            pageNumber === pageInfo.currentPageNumber ? "solid" : "ghost"
+          }
+          onClick={() => setNowPage(pageNumber)}
+        >
+          {pageNumber}
+        </Button>
+      ))}
+      {pageInfo.nextPageNumber && (
+        <Button onClick={() => setNowPage(pageInfo.nextPageNumber)}>
+          <FontAwesomeIcon icon={faChevronRight} />
+        </Button>
+      )}
+
+      {/*{pageInfo.nextPageNumber && (*/}
+      {/*  <Button onClick={() => navigate("/?p=" + pageInfo.lastPageNumber)}>*/}
+      {/*    <FontAwesomeIcon icon={faAnglesRight} />*/}
+      {/*  </Button>*/}
+      {/*)}*/}
+    </Box>
+  );
+}
