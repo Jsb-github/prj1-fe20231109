@@ -2,6 +2,8 @@ import { Box, Button, Spinner, Text } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
+  faAnglesLeft,
+  faAnglesRight,
   faChevronLeft,
   faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
@@ -18,11 +20,11 @@ export function CommentPagination({ pageInfo, setNowPage }) {
 
   return (
     <Box>
-      {/*{pageInfo.prevPageNumber > 0 && (*/}
-      {/*  <Button onClick={() => navigate("/?p=1")}>*/}
-      {/*    <FontAwesomeIcon icon={faAnglesLeft} />*/}
-      {/*  </Button>*/}
-      {/*)}*/}
+      {pageInfo.prevPageNumber > 0 && (
+        <Button onClick={() => setNowPage(1)}>
+          <FontAwesomeIcon icon={faAnglesLeft} />
+        </Button>
+      )}
       {pageInfo.prevPageNumber > 0 && (
         <Button
           variant="ghost"
@@ -48,11 +50,11 @@ export function CommentPagination({ pageInfo, setNowPage }) {
         </Button>
       )}
 
-      {/*{pageInfo.nextPageNumber && (*/}
-      {/*  <Button onClick={() => navigate("/?p=" + pageInfo.lastPageNumber)}>*/}
-      {/*    <FontAwesomeIcon icon={faAnglesRight} />*/}
-      {/*  </Button>*/}
-      {/*)}*/}
+      {pageInfo.nextPageNumber && (
+        <Button onClick={() => setNowPage(pageInfo.lastPageNumber)}>
+          <FontAwesomeIcon icon={faAnglesRight} />
+        </Button>
+      )}
     </Box>
   );
 }

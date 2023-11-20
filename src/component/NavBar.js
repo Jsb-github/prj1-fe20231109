@@ -1,4 +1,4 @@
-import { Button, Flex, useToast } from "@chakra-ui/react";
+import { Button, Flex, theme, useToast } from "@chakra-ui/react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -25,7 +25,7 @@ export function NavBar() {
     useContext(LoginContext);
 
   const context = useContext(ThemeContext);
-  console.log(context.theme);
+
   const urlParams = new URLSearchParams();
   const location = useLocation();
   useEffect(() => {
@@ -46,51 +46,62 @@ export function NavBar() {
   }
 
   return (
-    <Flex>
-      <Button onClick={() => navigate("/")}>
+    <Flex gap="3">
+      <Button onClick={() => navigate("/")} className="nav__theme--btn">
         Home <FontAwesomeIcon icon={faHouse} />
       </Button>
       {}
 
       {isAuthenticated() ? (
         <>
-          <Button onClick={() => navigate("/write")}>
+          <Button
+            className="nav__theme--btn"
+            onClick={() => navigate("/write")}
+          >
             write
             <FontAwesomeIcon icon={faPenToSquare} />
           </Button>
-          <Button onClick={() => navigate(`/member?${urlParams}`)}>
+          <Button
+            className="nav__theme--btn"
+            onClick={() => navigate(`/member?${urlParams}`)}
+          >
             회원정보
             <FontAwesomeIcon icon={faUser} />
           </Button>
           {isAdmin() && (
-            <Button onClick={() => navigate("/member/List")}>
+            <Button
+              className="nav__theme--btn"
+              onClick={() => navigate("/member/List")}
+            >
               회원목록
               <FontAwesomeIcon icon={faUsers} />
             </Button>
           )}
-          <Button onClick={handleLogout}>
+          <Button className="nav__theme--btn" onClick={handleLogout}>
             로그아웃
             <FontAwesomeIcon icon={faArrowRightFromBracket} />
           </Button>
         </>
       ) : (
         <>
-          <Button onClick={() => navigate("/login")}>
+          <Button
+            className="nav__theme--btn"
+            onClick={() => navigate("/login")}
+          >
             로그인
             <FontAwesomeIcon icon={faRightToBracket} />
           </Button>
-          <Button onClick={() => navigate("/signup")}>
+          <Button
+            className="nav__theme--btn"
+            onClick={() => navigate("/signup")}
+          >
             회원가입 <FontAwesomeIcon icon={faUserPlus} />
           </Button>
         </>
       )}
 
       {context.theme === "light" ? (
-        <BsSun
-          size="xl"
-          onClick={context.toggleMode}
-          className="nav__theme-btn"
-        />
+        <BsSun onClick={context.toggleMode} className="nav__theme-btn" />
       ) : (
         <BsMoonFill onClick={context.toggleMode} className="nav__theme-btn" />
       )}

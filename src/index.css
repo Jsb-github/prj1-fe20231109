@@ -30,7 +30,8 @@
 .dark .post__navigation--active,
 .dark .post__author__name,
 .dark .footer__theme-btn,
-.dark .profile__name
+.dark .profile__name,
+.dark .nav__theme--btn
 {
     color: white;
 }
@@ -41,7 +42,9 @@
 .dark .post__text--pre--wrap,
 .dark .profile__email,
 .dark .post__date,
-.dark .form__block {
+.dark .form__block,
+.dark .nav__theme--btn
+{
     color: lightgray;
 }
 

@@ -14,7 +14,7 @@ function PageButton({ variant, pageNumber, children }) {
   const [params] = useSearchParams();
 
   const navigate = useNavigate();
-  console.log(params);
+
   function handleClick() {
     params.set("p", pageNumber);
     navigate("/?" + params);
@@ -29,7 +29,6 @@ function PageButton({ variant, pageNumber, children }) {
 
 export function Pagination({ pageInfo }) {
   const pageNumbers = [];
-  const navigate = useNavigate();
 
   for (let i = pageInfo.startPageNumber; i <= pageInfo.endPageNumber; i++) {
     pageNumbers.push(i);
