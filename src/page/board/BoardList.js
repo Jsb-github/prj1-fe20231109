@@ -17,7 +17,7 @@ import axios from "axios";
 
 import { ChatIcon } from "@chakra-ui/icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart } from "@fortawesome/free-solid-svg-icons";
+import { faHeart, faImages } from "@fortawesome/free-solid-svg-icons";
 import { Pagination } from "./Pagination";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 
@@ -95,7 +95,14 @@ export function BoardList() {
                       {board.countComment}
                     </Badge>
                   )}
+                  {board.countFile > 0 && (
+                    <Badge>
+                      <FontAwesomeIcon icon={faImages} />
+                      {board.countFile}
+                    </Badge>
+                  )}
                 </Td>
+
                 <Td>{board.nickName}</Td>
                 <Td>{board.ago}</Td>
               </Tr>
