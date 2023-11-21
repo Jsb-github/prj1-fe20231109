@@ -1,5 +1,5 @@
-import { Box, Button, Spinner, Text } from "@chakra-ui/react";
-import { useNavigate } from "react-router-dom";
+import { Box, Button } from "@chakra-ui/react";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faAnglesLeft,
@@ -10,7 +10,6 @@ import {
 
 export function CommentPagination({ pageInfo, setNowPage }) {
   const pageNumbers = [];
-  const navigate = useNavigate();
 
   if (pageInfo != null) {
     for (let i = pageInfo.startPageNumber; i <= pageInfo.endPageNumber; i++) {

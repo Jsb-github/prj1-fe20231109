@@ -14,7 +14,7 @@ import {
 import axios from "axios";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { LoginContext } from "../../context/LoginProvider";
-import { useLocation } from "react-router-dom";
+
 import { CommentForm } from "./CommentForm";
 import { CommentList } from "./CommentList";
 
@@ -30,7 +30,6 @@ export function CommentContainer({ boardId, p }) {
   const { isAuthenticated } = useContext(LoginContext);
   const [pageInfo, setPageInfo] = useState(null);
   const [nowPage, setNowPage] = useState(1);
-  const location = useLocation();
 
   function handleSubmit(comment) {
     setIsSubmitting(true);
@@ -107,7 +106,6 @@ export function CommentContainer({ boardId, p }) {
     }
   }, [isSubmitting, nowPage]);
 
-  console.log(nowPage);
   function handleDeleteModalOpen(id) {
     // id를 어딘가 저장
     // setId(id);

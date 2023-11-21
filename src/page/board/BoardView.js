@@ -8,6 +8,7 @@ import {
   FormControl,
   FormLabel,
   Heading,
+  Image,
   Input,
   Modal,
   ModalBody,
@@ -77,6 +78,7 @@ export function BoardView() {
       .get("/api/like/board/" + id)
       .then((response) => setLike(response.data));
   }, []);
+
   if (board === null) {
     return <Spinner />;
   }
@@ -119,6 +121,24 @@ export function BoardView() {
         <FormLabel>제목</FormLabel>
         <Input value={board.title} readOnly />
       </FormControl>
+
+      {/*이미지 출력*/}
+      {board.files.map((file) => (
+        <Box
+          width="300px"
+          height="300px"
+          key={file.id}
+          my="5px"
+          border="3px solid black"
+        >
+          <Image
+            width="100%"
+            height="100%"
+            src={file.url}
+            alt={file.fileName}
+          />
+        </Box>
+      ))}
       <FormControl>
         <FormLabel>본문</FormLabel>
         <Input value={board.content} readOnly />

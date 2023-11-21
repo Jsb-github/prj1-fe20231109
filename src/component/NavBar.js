@@ -1,4 +1,4 @@
-import { Button, Flex, theme, useToast } from "@chakra-ui/react";
+import { Button, Flex, useToast } from "@chakra-ui/react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -77,6 +77,7 @@ export function NavBar() {
               <FontAwesomeIcon icon={faUsers} />
             </Button>
           )}
+
           <Button className="nav__theme--btn" onClick={handleLogout}>
             로그아웃
             <FontAwesomeIcon icon={faArrowRightFromBracket} />

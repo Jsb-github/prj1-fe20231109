@@ -16,6 +16,10 @@ import {
   ModalFooter,
   useDisclosure,
   useToast,
+  Stack,
+  Avatar,
+  AvatarBadge,
+  Flex,
 } from "@chakra-ui/react";
 import axios from "axios";
 import { LoginContext } from "../../context/LoginProvider";
@@ -41,7 +45,7 @@ export function MemberView() {
           status: "warning",
         });
       });
-  }, []);
+  });
 
   if (member === null) {
     return <Spinner />;
@@ -87,7 +91,16 @@ export function MemberView() {
 
   return (
     <Box>
-      <h1>{member.id}님 정보</h1>
+      <Flex>
+        <Stack direction="row" spacing={4}>
+          <Avatar>
+            <AvatarBadge />
+          </Avatar>
+        </Stack>
+
+        <h1>{member.id}님 정보</h1>
+      </Flex>
+
       <FormControl>
         <FormLabel>password</FormLabel>
         <Input type="text" value={member.password} readOnly />
