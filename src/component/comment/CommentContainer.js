@@ -1,6 +1,8 @@
 import {
   Box,
   Button,
+  Center,
+  Heading,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -17,6 +19,9 @@ import { LoginContext } from "../../context/LoginProvider";
 
 import { CommentForm } from "./CommentForm";
 import { CommentList } from "./CommentList";
+import { Fa0 } from "react-icons/fa6";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faComment } from "@fortawesome/free-regular-svg-icons/faComment";
 
 export function CommentContainer({ boardId, p }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -117,14 +122,26 @@ export function CommentContainer({ boardId, p }) {
 
   return (
     <Box>
+      <Center mt={10}>
+        <Box w={"lg"}>
+          <Heading>
+            <FontAwesomeIcon icon={faComment} />
+            COMMENTS
+          </Heading>
+        </Box>
+      </Center>
       {isAuthenticated() && (
-        <CommentForm
-          boardId={boardId}
-          isSubmitting={isSubmitting}
-          onSubmit={handleSubmit}
-          setComment={setComment}
-          comment={comment}
-        />
+        <Center mt={10}>
+          <Box w={"lg"}>
+            <CommentForm
+              boardId={boardId}
+              isSubmitting={isSubmitting}
+              onSubmit={handleSubmit}
+              setComment={setComment}
+              comment={comment}
+            />
+          </Box>
+        </Center>
       )}
 
       <CommentList
