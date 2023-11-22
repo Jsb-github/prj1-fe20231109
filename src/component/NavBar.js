@@ -15,16 +15,12 @@ import {
   faUserPlus,
   faUsers,
 } from "@fortawesome/free-solid-svg-icons";
-import { ThemeContext } from "../context/TemeContextProvider";
-import { BsMoonFill, BsSun } from "react-icons/bs";
 
 export function NavBar() {
   const toast = useToast();
   const navigate = useNavigate();
   const { fetchLogin, login, isAuthenticated, isAdmin } =
     useContext(LoginContext);
-
-  const context = useContext(ThemeContext);
 
   const urlParams = new URLSearchParams();
   const location = useLocation();
@@ -53,7 +49,6 @@ export function NavBar() {
         size={0}
         leftIcon={<FontAwesomeIcon icon={faHouse} />}
         onClick={() => navigate("/")}
-        className="nav__theme--btn"
       >
         Home
       </Button>
@@ -66,7 +61,6 @@ export function NavBar() {
             variant={"ghost"}
             size={0}
             leftIcon={<FontAwesomeIcon icon={faPenToSquare} />}
-            className="nav__theme--btn"
             onClick={() => navigate("/write")}
           >
             write
@@ -77,7 +71,6 @@ export function NavBar() {
             variant={"ghost"}
             size={0}
             leftIcon={<FontAwesomeIcon icon={faUser} />}
-            className="nav__theme--btn"
             onClick={() => navigate(`/member?${urlParams}`)}
           >
             {login.nickName}님
@@ -88,7 +81,6 @@ export function NavBar() {
               variant={"ghost"}
               size={0}
               leftIcon={<FontAwesomeIcon icon={faUsers} />}
-              className="nav__theme--btn"
               onClick={() => navigate("/member/List")}
             >
               회원목록
@@ -100,7 +92,6 @@ export function NavBar() {
             variant={"ghost"}
             size={0}
             leftIcon={<FontAwesomeIcon icon={faArrowRightFromBracket} />}
-            className="nav__theme--btn"
             onClick={handleLogout}
           >
             로그아웃
@@ -113,7 +104,6 @@ export function NavBar() {
             borderRadius={0}
             variant={"ghost"}
             size={0}
-            className="nav__theme--btn"
             leftIcon={<FontAwesomeIcon icon={faRightToBracket} />}
             onClick={() => navigate("/login")}
           >
@@ -124,18 +114,11 @@ export function NavBar() {
             variant={"ghost"}
             size={0}
             leftIcon={<FontAwesomeIcon icon={faUserPlus} />}
-            className="nav__theme--btn"
             onClick={() => navigate("/signup")}
           >
             회원가입
           </Button>
         </>
-      )}
-
-      {context.theme === "light" ? (
-        <BsSun onClick={context.toggleMode} className="nav__theme-btn" />
-      ) : (
-        <BsMoonFill onClick={context.toggleMode} className="nav__theme-btn" />
       )}
     </Flex>
   );

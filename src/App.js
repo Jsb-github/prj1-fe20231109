@@ -17,8 +17,6 @@ import { BoardList } from "./page/board/BoardList";
 import MemberLogin from "./page/member/MemberLogin";
 
 import LoginProvider from "./context/LoginProvider";
-import { useContext } from "react";
-import { ThemeContext } from "./context/TemeContextProvider";
 
 const routes = createBrowserRouter(
   createRoutesFromElements(
@@ -40,14 +38,10 @@ const routes = createBrowserRouter(
 );
 
 function App(props) {
-  const context = useContext(ThemeContext);
-
   return (
-    <div className={context.theme === "light" ? "white" : "dark"}>
-      <LoginProvider>
-        <RouterProvider router={routes} />
-      </LoginProvider>
-    </div>
+    <LoginProvider>
+      <RouterProvider router={routes} />
+    </LoginProvider>
   );
 }
 
