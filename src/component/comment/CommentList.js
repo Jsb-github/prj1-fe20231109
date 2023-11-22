@@ -2,6 +2,7 @@ import {
   Card,
   CardBody,
   CardHeader,
+  Center,
   Heading,
   Stack,
   StackDivider,
@@ -22,31 +23,33 @@ export function CommentList({
   setNowPage,
 }) {
   return (
-    <Card>
-      <CardHeader>
-        <Heading size="md">댓글 리스트</Heading>
-      </CardHeader>
-      <CardBody>
-        <Stack divider={<StackDivider />} spacing="4">
-          {commentList.map((comment) => (
-            <CommentItem
-              key={comment.id}
-              comment={comment}
-              onDeleteModalOpen={onDeleteModalOpen}
-              isSubmitting={isSubmitting}
-              setIsSubmitting={setIsSubmitting}
+    <Center>
+      <Card w={"lg"}>
+        <CardHeader>
+          <Heading size="md">댓글 리스트</Heading>
+        </CardHeader>
+        <CardBody>
+          <Stack divider={<StackDivider />} spacing="4">
+            {commentList.map((comment) => (
+              <CommentItem
+                key={comment.id}
+                comment={comment}
+                onDeleteModalOpen={onDeleteModalOpen}
+                isSubmitting={isSubmitting}
+                setIsSubmitting={setIsSubmitting}
+              />
+            ))}
+          </Stack>
+          {commentList.length > 0 && (
+            <CommentPagination
+              pageInfo={pageInfo}
+              boardId={boardId}
+              setNowPage={setNowPage}
             />
-          ))}
-        </Stack>
-        {commentList.length > 0 && (
-          <CommentPagination
-            pageInfo={pageInfo}
-            boardId={boardId}
-            setNowPage={setNowPage}
-          />
-          // <Pagination pageInfo={pageInfo} setNowPage={setNowPage} />
-        )}
-      </CardBody>
-    </Card>
+            // <Pagination pageInfo={pageInfo} setNowPage={setNowPage} />
+          )}
+        </CardBody>
+      </Card>
+    </Center>
   );
 }

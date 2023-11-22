@@ -2,9 +2,17 @@ import React, { useEffect, useState } from "react";
 import {
   Box,
   Button,
+  Card,
+  CardBody,
+  CardFooter,
+  CardHeader,
+  Center,
+  Divider,
+  Flex,
   FormControl,
   FormHelperText,
   FormLabel,
+  Heading,
   Image,
   Input,
   Modal,
@@ -101,73 +109,87 @@ function BoardEdit(props) {
   }
 
   return (
-    <Box>
-      <h1>{board.id}번 수정하기</h1>
-      <FormControl>
-        <FormLabel>제목</FormLabel>
-        <Input
-          value={board.title}
-          onChange={(e) =>
-            updateBoard((draft) => {
-              draft.title = e.target.value;
-            })
-          }
-        />
-      </FormControl>
-      <FormControl>
-        <FormLabel>본문</FormLabel>
-        <Input
-          value={board.content}
-          onChange={(e) =>
-            updateBoard((draft) => {
-              draft.content = e.target.value;
-            })
-          }
-        />
-      </FormControl>
+    <Center>
+      <Card w={"lg"}>
+        <CardHeader>
+          <Heading>{board.id}번 수정하기</Heading>
+        </CardHeader>
 
-      {/*이미지 출력*/}
-      {board.files.length > 0 &&
-        board.files.map((file) => (
-          <Box key={file.id} my="5px" border="3px solid black" width="305px">
-            <FormControl display="flex" alignItems="center">
-              <FormLabel>
-                <FontAwesomeIcon color="red" icon={faTrashCan} />
-              </FormLabel>
-              <Switch
-                value={file.id}
-                colorScheme="red"
-                onChange={handleRemoveFileSwitch}
-              />
-            </FormControl>
-            <Box width="300px" height="300px">
-              <Image
-                width="100%"
-                height="100%"
-                src={file.url}
-                alt={file.fileName}
-              />
-            </Box>
-          </Box>
-        ))}
+        <CardBody>
+          <FormControl mb={5}>
+            <FormLabel>제목</FormLabel>
+            <Input
+              value={board.title}
+              onChange={(e) =>
+                updateBoard((draft) => {
+                  draft.title = e.target.value;
+                })
+              }
+            />
+          </FormControl>
 
-      <FormControl>
-        <FormLabel>이미지</FormLabel>
-        <Input
-          type="file"
-          accept="image/*"
-          multiple
-          onChange={(e) => setUploadFiles(e.target.files)}
-        />
-        <FormHelperText>
-          한 개 파일은 1MB 이내, 총 용량은 10MB 이내로 첨부하세요.
-        </FormHelperText>
-      </FormControl>
+          <FormControl mb={5}>
+            <FormLabel>본문</FormLabel>
+            <Input
+              value={board.content}
+              onChange={(e) =>
+                updateBoard((draft) => {
+                  draft.content = e.target.value;
+                })
+              }
+            />
+          </FormControl>
 
-      <Button colorScheme="blue" onClick={onOpen}>
-        수정
-      </Button>
-      <Button onClick={() => navigate(-1)}>취소</Button>
+          {/*이미지 출력*/}
+          {board.files.length > 0 &&
+            board.files.map((file) => (
+              <Card key={file.id} my={5}>
+                <CardBody height="300px">
+                  <Image
+                    width="100%"
+                    height="100%"
+                    src={file.url}
+                    alt={file.fileName}
+                  />
+                </CardBody>
+                <Divider />
+                <CardFooter>
+                  <FormControl display="flex" alignItems="center" gap={2}>
+                    <FormLabel m={0} p={0}>
+                      <FontAwesomeIcon color="red" icon={faTrashCan} />
+                    </FormLabel>
+                    <Switch
+                      value={file.id}
+                      colorScheme="red"
+                      onChange={handleRemoveFileSwitch}
+                    />
+                  </FormControl>
+                </CardFooter>
+              </Card>
+            ))}
+
+          <FormControl mb={5}>
+            <FormLabel>이미지</FormLabel>
+            <Input
+              type="file"
+              accept="image/*"
+              multiple
+              onChange={(e) => setUploadFiles(e.target.files)}
+            />
+            <FormHelperText>
+              한 개 파일은 1MB 이내, 총 용량은 10MB 이내로 첨부하세요.
+            </FormHelperText>
+          </FormControl>
+        </CardBody>
+        <CardFooter>
+          <Flex gap={2}>
+            <Button colorScheme="blue" onClick={onOpen}>
+              수정
+            </Button>
+            <Button onClick={() => navigate(-1)}>취소</Button>
+          </Flex>
+        </CardFooter>
+      </Card>
       {/*  수정 모달*/}
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
@@ -184,7 +206,7 @@ function BoardEdit(props) {
           </ModalFooter>
         </ModalContent>
       </Modal>
-    </Box>
+    </Center>
   );
 }
 

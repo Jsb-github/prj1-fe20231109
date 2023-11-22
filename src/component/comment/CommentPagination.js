@@ -1,4 +1,4 @@
-import { Box, Button } from "@chakra-ui/react";
+import { Box, Button, Center } from "@chakra-ui/react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -18,42 +18,44 @@ export function CommentPagination({ pageInfo, setNowPage }) {
   }
 
   return (
-    <Box>
-      {pageInfo.prevPageNumber > 0 && (
-        <Button onClick={() => setNowPage(1)}>
-          <FontAwesomeIcon icon={faAnglesLeft} />
-        </Button>
-      )}
-      {pageInfo.prevPageNumber > 0 && (
-        <Button
-          variant="ghost"
-          onClick={() => setNowPage(pageInfo.prevPageNumber)}
-        >
-          <FontAwesomeIcon icon={faChevronLeft} />
-        </Button>
-      )}
-      {pageNumbers.map((pageNumber) => (
-        <Button
-          key={pageNumber}
-          variant={
-            pageNumber === pageInfo.currentPageNumber ? "solid" : "ghost"
-          }
-          onClick={() => setNowPage(pageNumber)}
-        >
-          {pageNumber}
-        </Button>
-      ))}
-      {pageInfo.nextPageNumber && (
-        <Button onClick={() => setNowPage(pageInfo.nextPageNumber)}>
-          <FontAwesomeIcon icon={faChevronRight} />
-        </Button>
-      )}
+    <Center marginTop={5}>
+      <Box>
+        {pageInfo.prevPageNumber > 0 && (
+          <Button onClick={() => setNowPage(1)}>
+            <FontAwesomeIcon icon={faAnglesLeft} />
+          </Button>
+        )}
+        {pageInfo.prevPageNumber > 0 && (
+          <Button
+            variant="ghost"
+            onClick={() => setNowPage(pageInfo.prevPageNumber)}
+          >
+            <FontAwesomeIcon icon={faChevronLeft} />
+          </Button>
+        )}
+        {pageNumbers.map((pageNumber) => (
+          <Button
+            key={pageNumber}
+            variant={
+              pageNumber === pageInfo.currentPageNumber ? "solid" : "ghost"
+            }
+            onClick={() => setNowPage(pageNumber)}
+          >
+            {pageNumber}
+          </Button>
+        ))}
+        {pageInfo.nextPageNumber && (
+          <Button onClick={() => setNowPage(pageInfo.nextPageNumber)}>
+            <FontAwesomeIcon icon={faChevronRight} />
+          </Button>
+        )}
 
-      {pageInfo.nextPageNumber && (
-        <Button onClick={() => setNowPage(pageInfo.lastPageNumber)}>
-          <FontAwesomeIcon icon={faAnglesRight} />
-        </Button>
-      )}
-    </Box>
+        {pageInfo.nextPageNumber && (
+          <Button onClick={() => setNowPage(pageInfo.lastPageNumber)}>
+            <FontAwesomeIcon icon={faAnglesRight} />
+          </Button>
+        )}
+      </Box>
+    </Center>
   );
 }

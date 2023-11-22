@@ -96,6 +96,7 @@ export function CommentItem({ comment, onDeleteModalOpen, setIsSubmitting }) {
             )}
             {isEditing && (
               <Button
+                variant={"ghost"}
                 size="xs"
                 colorScheme="gray"
                 onClick={() => setIsEditing(false)}
@@ -104,6 +105,7 @@ export function CommentItem({ comment, onDeleteModalOpen, setIsSubmitting }) {
               </Button>
             )}
             <Button
+              variant={"ghost"}
               colorScheme="red"
               size="xs"
               onClick={() => onDeleteModalOpen(comment.id)}
