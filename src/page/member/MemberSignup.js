@@ -2,11 +2,17 @@ import React, { useState } from "react";
 import {
   Box,
   Button,
+  Card,
+  CardBody,
+  CardFooter,
+  CardHeader,
+  Center,
   Checkbox,
   Flex,
   FormControl,
   FormErrorMessage,
   FormLabel,
+  Heading,
   Input,
   Textarea,
   useToast,
@@ -270,176 +276,192 @@ function MemberSignup(props) {
   }
 
   return (
-    <Box width="500px">
-      <h1>회원 가입</h1>
-      <FormControl>
-        <Flex>
-          <Input
-            type="text"
-            value={id}
-            placeholder="아이디"
-            onChange={onChangeId}
-          />
+    <Center>
+      <Card w={"md"}>
+        <CardHeader>
+          <Heading>회원 가입</Heading>
+        </CardHeader>
 
-          <Button
-            colorScheme={idAvailable ? "blue" : "red"}
-            onClick={handleIdCheck}
-            isDisabled={!isId}
-          >
-            중복확인
-          </Button>
-        </Flex>
-        <p>{idMessage}</p>
-      </FormControl>
-
-      <FormControl>
-        <Input
-          type="password"
-          value={password}
-          placeholder="비밀번호"
-          onChange={onChangePassword}
-        />
-        <p>{passwordMessage}</p>
-      </FormControl>
-
-      <FormControl>
-        <Flex>
-          <Input
-            type="text"
-            value={nickName}
-            onChange={onChangeNickName}
-            placeholder="닉네임을 입력해주세요"
-          ></Input>
-          <Button
-            onClick={handleNickNameCheck}
-            colorScheme={nickName ? "blue" : "red"}
-            isDisabled={!nickName}
-          >
-            중복확인
-          </Button>
-        </Flex>
-        <p>{nickNameMessage}</p>
-      </FormControl>
-      <FormControl>
-        <Flex>
-          <Input
-            type="text"
-            value={email}
-            placeholder="비밀 번호 분실시 확인용 이메일"
-            onChange={onChangeEmail}
-          />
-
-          <Button
-            onClick={handleEmailChk}
-            colorScheme={emailAvailable ? "blue" : "red"}
-            isDisabled={!isEmail}
-          >
-            이메일 중복확인
-          </Button>
-        </Flex>
-        <p>{emailMessage}</p>
-      </FormControl>
-
-      <FormControl>
-        <Input
-          type="text"
-          value={name}
-          placeholder="이름"
-          onChange={onChangeName}
-        />
-        <p>{nameMessage}</p>
-      </FormControl>
-
-      <FormControl>
-        <Input
-          type="text"
-          value={birth}
-          maxLength={8}
-          placeholder="생년월일 8자리"
-          onChange={onChangeBirth}
-        />
-        <p>{birthMessage}</p>
-      </FormControl>
-
-      <FormControl>
-        <Box>
-          <Flex>
-            <FormLabel>
-              <input
-                type="radio"
-                id="gender1"
-                name="gender"
-                value={"남성"}
-                checked
-                onChange={(e) => {
-                  setGender(e.target.value);
-                }}
+        <CardBody>
+          <FormControl mb={5}>
+            <Flex gap={2}>
+              <Input
+                type="text"
+                value={id}
+                placeholder="아이디"
+                onChange={onChangeId}
               />
-              남성
-            </FormLabel>
+
+              <Button
+                colorScheme={idAvailable ? "blue" : "red"}
+                onClick={handleIdCheck}
+                isDisabled={!isId}
+              >
+                중복확인
+              </Button>
+            </Flex>
+            <p>{idMessage}</p>
+          </FormControl>
+
+          <FormControl mb={5}>
+            <Input
+              type="password"
+              value={password}
+              placeholder="비밀번호"
+              onChange={onChangePassword}
+            />
+            <p>{passwordMessage}</p>
+          </FormControl>
+
+          <FormControl mb={5}>
+            <Flex gap={2}>
+              <Input
+                type="text"
+                value={nickName}
+                onChange={onChangeNickName}
+                placeholder="닉네임을 입력해주세요"
+              ></Input>
+              <Button
+                onClick={handleNickNameCheck}
+                colorScheme={nickName ? "blue" : "red"}
+                isDisabled={!nickName}
+              >
+                중복확인
+              </Button>
+            </Flex>
+            <p>{nickNameMessage}</p>
+          </FormControl>
+
+          <FormControl mb={5}>
+            <Flex gap={2}>
+              <Input
+                type="text"
+                value={email}
+                placeholder="비밀 번호 분실시 확인용 이메일"
+                onChange={onChangeEmail}
+              />
+
+              <Button
+                onClick={handleEmailChk}
+                colorScheme={emailAvailable ? "blue" : "red"}
+                isDisabled={!isEmail}
+              >
+                이메일 중복확인
+              </Button>
+            </Flex>
+            <p>{emailMessage}</p>
+          </FormControl>
+
+          <FormControl mb={5}>
+            <Input
+              type="text"
+              value={name}
+              placeholder="이름"
+              onChange={onChangeName}
+            />
+            <p>{nameMessage}</p>
+          </FormControl>
+
+          <FormControl mb={5}>
+            <Input
+              type="text"
+              value={birth}
+              maxLength={8}
+              placeholder="생년월일 8자리"
+              onChange={onChangeBirth}
+            />
+            <p>{birthMessage}</p>
+          </FormControl>
+
+          <FormControl mb={5}>
+            <Box>
+              <Flex>
+                <FormLabel>
+                  <input
+                    type="radio"
+                    id="gender1"
+                    name="gender"
+                    value={"남성"}
+                    checked
+                    onChange={(e) => {
+                      setGender(e.target.value);
+                    }}
+                  />
+                  남성
+                </FormLabel>
+
+                <FormLabel mb={5}>
+                  <input
+                    type="radio"
+                    id="gender2"
+                    name="gender"
+                    value={"여성"}
+                    onChange={(e) => {
+                      setGender(e.target.value);
+                    }}
+                  />
+                  여성
+                </FormLabel>
+              </Flex>
+            </Box>
+            <FormErrorMessage>성별을 채크해주세요</FormErrorMessage>
+          </FormControl>
+
+          <FormControl mb={5}>
+            <Input
+              value={phone}
+              placeholder="휴대전화번호"
+              onChange={addHyphen}
+            />
+            <p>{phoneMessage}</p>
+          </FormControl>
+
+          <FormControl isInvalid={checkedBox === false}>
+            <FormLabel>이용약관</FormLabel>
+            <Textarea rows={10} readOnly>
+              {/* 약관 컴포넌트 생성*/}
+            </Textarea>
 
             <FormLabel>
-              <input
-                type="radio"
-                id="gender2"
-                name="gender"
-                value={"여성"}
+              <Checkbox
+                value={checkedBox}
                 onChange={(e) => {
-                  setGender(e.target.value);
+                  //채크박스 초기화
+                  setCheckedBox(e.target.checked);
                 }}
-              />
-              여성
+              >
+                동의 합니까?
+              </Checkbox>
             </FormLabel>
-          </Flex>
-        </Box>
-        <FormErrorMessage>성별을 채크해주세요</FormErrorMessage>
-      </FormControl>
+            <FormErrorMessage>
+              약관을 읽어보시고 채크해주세요.!!!
+            </FormErrorMessage>
+          </FormControl>
+        </CardBody>
 
-      <FormControl>
-        <Input value={phone} placeholder="휴대전화번호" onChange={addHyphen} />
-        <p>{phoneMessage}</p>
-      </FormControl>
-
-      <FormControl isInvalid={checkedBox === false}>
-        <FormLabel>이용약관</FormLabel>
-        <Textarea rows={10} readOnly>
-          {/* 약관 컴포넌트 생성*/}
-        </Textarea>
-
-        <FormLabel>
-          <Checkbox
-            value={checkedBox}
-            onChange={(e) => {
-              //채크박스 초기화
-              setCheckedBox(e.target.checked);
-            }}
+        <CardFooter>
+          <Button
+            isDisabled={
+              !(
+                idAvailable &&
+                isname &&
+                emailAvailable &&
+                isBirth &&
+                isPassword &&
+                isPhone &&
+                checkedBox &&
+                nickNameAvailable
+              )
+            }
+            onClick={handleSubmit}
           >
-            동의 합니까?
-          </Checkbox>
-        </FormLabel>
-        <FormErrorMessage>약관을 읽어보시고 채크해주세요.!!!</FormErrorMessage>
-      </FormControl>
+            가입
+          </Button>
 
-      <Button
-        isDisabled={
-          !(
-            idAvailable &&
-            isname &&
-            emailAvailable &&
-            isBirth &&
-            isPassword &&
-            isPhone &&
-            checkedBox &&
-            nickNameAvailable
-          )
-        }
-        onClick={handleSubmit}
-      >
-        가입
-      </Button>
-
-      <Button colorScheme="blue">가입취소</Button>
-    </Box>
+          <Button colorScheme="blue">가입취소</Button>
+        </CardFooter>
+      </Card>
+    </Center>
   );
 }
 
