@@ -46,7 +46,7 @@ export function NavBar() {
   }
 
   return (
-    <Flex gap="4" borderBottom={"1px solid #b0c4de"}>
+    <Flex mb={10} gap="4" borderBottom={"1px solid #b0c4de"}>
       <Button
         borderRadius={0}
         variant={"ghost"}

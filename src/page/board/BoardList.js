@@ -83,9 +83,9 @@ export function BoardList() {
   }
 
   return (
-    <Box marginTop={5} mb={40}>
+    <Box>
       <Heading>게시물 목록</Heading>
-      <Box>
+      <Box marginTop={8}>
         <Table>
           <Thead>
             <Tr>
