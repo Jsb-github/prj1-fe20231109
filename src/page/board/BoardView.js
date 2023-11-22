@@ -121,7 +121,10 @@ export function BoardView() {
         <FormLabel>제목</FormLabel>
         <Input value={board.title} readOnly />
       </FormControl>
-
+      <FormControl>
+        <FormLabel>본문</FormLabel>
+        <Input value={board.content} readOnly />
+      </FormControl>
       {/*이미지 출력*/}
       {board.files.map((file) => (
         <Box
@@ -139,10 +142,7 @@ export function BoardView() {
           />
         </Box>
       ))}
-      <FormControl>
-        <FormLabel>본문</FormLabel>
-        <Input value={board.content} readOnly />
-      </FormControl>
+
       <FormControl>
         <FormLabel>닉네임</FormLabel>
         <Input value={board.nickName} readOnly />

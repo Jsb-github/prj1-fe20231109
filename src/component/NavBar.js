@@ -47,56 +47,64 @@ export function NavBar() {
 
   return (
     <Flex gap="3">
-      <Button onClick={() => navigate("/")} className="nav__theme--btn">
-        Home <FontAwesomeIcon icon={faHouse} />
+      <Button
+        leftIcon={<FontAwesomeIcon icon={faHouse} />}
+        onClick={() => navigate("/")}
+        className="nav__theme--btn"
+      >
+        Home
       </Button>
       {}
 
       {isAuthenticated() ? (
         <>
           <Button
+            leftIcon={<FontAwesomeIcon icon={faPenToSquare} />}
             className="nav__theme--btn"
             onClick={() => navigate("/write")}
           >
             write
-            <FontAwesomeIcon icon={faPenToSquare} />
           </Button>
           <Button
+            leftIcon={<FontAwesomeIcon icon={faUser} />}
             className="nav__theme--btn"
             onClick={() => navigate(`/member?${urlParams}`)}
           >
-            회원정보
-            <FontAwesomeIcon icon={faUser} />
+            {login.nickName}님
           </Button>
           {isAdmin() && (
             <Button
+              leftIcon={<FontAwesomeIcon icon={faUsers} />}
               className="nav__theme--btn"
               onClick={() => navigate("/member/List")}
             >
               회원목록
-              <FontAwesomeIcon icon={faUsers} />
             </Button>
           )}
 
-          <Button className="nav__theme--btn" onClick={handleLogout}>
+          <Button
+            leftIcon={<FontAwesomeIcon icon={faArrowRightFromBracket} />}
+            className="nav__theme--btn"
+            onClick={handleLogout}
+          >
             로그아웃
-            <FontAwesomeIcon icon={faArrowRightFromBracket} />
           </Button>
         </>
       ) : (
         <>
           <Button
             className="nav__theme--btn"
+            leftIcon={<FontAwesomeIcon icon={faRightToBracket} />}
             onClick={() => navigate("/login")}
           >
             로그인
-            <FontAwesomeIcon icon={faRightToBracket} />
           </Button>
           <Button
+            leftIcon={<FontAwesomeIcon icon={faUserPlus} />}
             className="nav__theme--btn"
             onClick={() => navigate("/signup")}
           >
-            회원가입 <FontAwesomeIcon icon={faUserPlus} />
+            회원가입
           </Button>
         </>
       )}

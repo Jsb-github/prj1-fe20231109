@@ -1,9 +1,13 @@
 import React, { useState } from "react";
 import { Box, Button, Textarea } from "@chakra-ui/react";
 
-export function CommentForm({ boardId, isSubmitting, onSubmit }) {
-  const [comment, setComment] = useState("");
-
+export function CommentForm({
+  boardId,
+  isSubmitting,
+  onSubmit,
+  comment,
+  setComment,
+}) {
   function handleSubmit() {
     onSubmit({ boardId, comment });
   }

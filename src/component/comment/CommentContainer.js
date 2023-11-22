@@ -30,7 +30,7 @@ export function CommentContainer({ boardId, p }) {
   const { isAuthenticated } = useContext(LoginContext);
   const [pageInfo, setPageInfo] = useState(null);
   const [nowPage, setNowPage] = useState(1);
-
+  const [comment, setComment] = useState("");
   function handleSubmit(comment) {
     setIsSubmitting(true);
     axios
@@ -40,6 +40,7 @@ export function CommentContainer({ boardId, p }) {
           description: "댓글 작성 등록되었습니다.",
           status: "success",
         });
+        setComment("");
       })
       .catch((error) => {
         if (error.response.status === 400) {
@@ -121,6 +122,8 @@ export function CommentContainer({ boardId, p }) {
           boardId={boardId}
           isSubmitting={isSubmitting}
           onSubmit={handleSubmit}
+          setComment={setComment}
+          comment={comment}
         />
       )}
 

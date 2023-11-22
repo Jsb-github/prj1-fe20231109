@@ -1,9 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Button,
   FormControl,
+  FormHelperText,
   FormLabel,
+  Image,
   Input,
   Modal,
   ModalBody,
@@ -13,16 +15,20 @@ import {
   ModalHeader,
   ModalOverlay,
   Spinner,
+  Switch,
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useImmer } from "use-immer";
 import axios from "axios";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 
 function BoardEdit(props) {
   const [board, updateBoard] = useImmer(null);
-
+  const [uploadFiles, setUploadFiles] = useState(null);
+  const [removeFileIds, setRemoveFileIds] = useState([]);
   const { isOpen, onOpen, onClose } = useDisclosure();
   // /edit/:id
   const { id } = useParams();
@@ -40,7 +46,14 @@ function BoardEdit(props) {
 
   function handleUpdate() {
     axios
-      .put(`/api/board/update`, board)
+      .putForm(`/api/board/update`, {
+        id: board.id,
+        title: board.title,
+        content: board.content,
+        removeFileIds,
+        uploadFiles,
+      })
+
       .then((response) => {
         toast({
           description: "수정 성공 했습니다",
@@ -77,6 +90,16 @@ function BoardEdit(props) {
     return <Spinner />;
   }
 
+  function handleRemoveFileSwitch(e) {
+    if (e.target.checked) {
+      // removeFileIds에 추가
+      setRemoveFileIds([...removeFileIds, e.target.value]);
+    } else {
+      setRemoveFileIds(removeFileIds.filter((item) => item !== e.target.value));
+      // removeFileIds에서 삭제
+    }
+  }
+
   return (
     <Box>
       <h1>{board.id}번 수정하기</h1>
@@ -103,10 +126,48 @@ function BoardEdit(props) {
         />
       </FormControl>
 
+      {/*이미지 출력*/}
+      {board.files.length > 0 &&
+        board.files.map((file) => (
+          <Box key={file.id} my="5px" border="3px solid black" width="305px">
+            <FormControl display="flex" alignItems="center">
+              <FormLabel>
+                <FontAwesomeIcon color="red" icon={faTrashCan} />
+              </FormLabel>
+              <Switch
+                value={file.id}
+                colorScheme="red"
+                onChange={handleRemoveFileSwitch}
+              />
+            </FormControl>
+            <Box width="300px" height="300px">
+              <Image
+                width="100%"
+                height="100%"
+                src={file.url}
+                alt={file.fileName}
+              />
+            </Box>
+          </Box>
+        ))}
+
+      <FormControl>
+        <FormLabel>이미지</FormLabel>
+        <Input
+          type="file"
+          accept="image/*"
+          multiple
+          onChange={(e) => setUploadFiles(e.target.files)}
+        />
+        <FormHelperText>
+          한 개 파일은 1MB 이내, 총 용량은 10MB 이내로 첨부하세요.
+        </FormHelperText>
+      </FormControl>
+
       <Button colorScheme="blue" onClick={onOpen}>
         수정
       </Button>
-
+      <Button onClick={() => navigate(-1)}>취소</Button>
       {/*  수정 모달*/}
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
