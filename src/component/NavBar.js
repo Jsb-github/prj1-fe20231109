@@ -48,6 +48,9 @@ export function NavBar() {
   return (
     <Flex gap="3">
       <Button
+        borderRadius={0}
+        variant={"ghost"}
+        size={0}
         leftIcon={<FontAwesomeIcon icon={faHouse} />}
         onClick={() => navigate("/")}
         className="nav__theme--btn"
@@ -59,6 +62,9 @@ export function NavBar() {
       {isAuthenticated() ? (
         <>
           <Button
+            borderRadius={0}
+            variant={"ghost"}
+            size={0}
             leftIcon={<FontAwesomeIcon icon={faPenToSquare} />}
             className="nav__theme--btn"
             onClick={() => navigate("/write")}
@@ -66,6 +72,9 @@ export function NavBar() {
             write
           </Button>
           <Button
+            borderRadius={0}
+            variant={"ghost"}
+            size={0}
             leftIcon={<FontAwesomeIcon icon={faUser} />}
             className="nav__theme--btn"
             onClick={() => navigate(`/member?${urlParams}`)}
@@ -74,6 +83,9 @@ export function NavBar() {
           </Button>
           {isAdmin() && (
             <Button
+              borderRadius={0}
+              variant={"ghost"}
+              size={0}
               leftIcon={<FontAwesomeIcon icon={faUsers} />}
               className="nav__theme--btn"
               onClick={() => navigate("/member/List")}
@@ -83,6 +95,9 @@ export function NavBar() {
           )}
 
           <Button
+            borderRadius={0}
+            variant={"ghost"}
+            size={0}
             leftIcon={<FontAwesomeIcon icon={faArrowRightFromBracket} />}
             className="nav__theme--btn"
             onClick={handleLogout}
@@ -93,6 +108,9 @@ export function NavBar() {
       ) : (
         <>
           <Button
+            borderRadius={0}
+            variant={"ghost"}
+            size={0}
             className="nav__theme--btn"
             leftIcon={<FontAwesomeIcon icon={faRightToBracket} />}
             onClick={() => navigate("/login")}
@@ -100,6 +118,9 @@ export function NavBar() {
             로그인
           </Button>
           <Button
+            borderRadius={0}
+            variant={"ghost"}
+            size={0}
             leftIcon={<FontAwesomeIcon icon={faUserPlus} />}
             className="nav__theme--btn"
             onClick={() => navigate("/signup")}
