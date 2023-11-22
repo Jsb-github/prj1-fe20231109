@@ -1,4 +1,4 @@
-import { Button, Flex, useToast } from "@chakra-ui/react";
+import { Button, Flex, Spacer, useToast } from "@chakra-ui/react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -46,7 +46,7 @@ export function NavBar() {
   }
 
   return (
-    <Flex gap="3">
+    <Flex gap="4">
       <Button
         borderRadius={0}
         variant={"ghost"}
@@ -71,6 +71,7 @@ export function NavBar() {
           >
             write
           </Button>
+          <Spacer />
           <Button
             borderRadius={0}
             variant={"ghost"}
@@ -107,6 +108,7 @@ export function NavBar() {
         </>
       ) : (
         <>
+          <Spacer />
           <Button
             borderRadius={0}
             variant={"ghost"}
