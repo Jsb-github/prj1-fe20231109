@@ -3,6 +3,7 @@ import {
   Badge,
   Box,
   Button,
+  Center,
   Flex,
   Heading,
   Input,
@@ -17,9 +18,9 @@ import {
 } from "@chakra-ui/react";
 import axios from "axios";
 
-import { ChatIcon } from "@chakra-ui/icons";
+import { ChatIcon, SearchIcon } from "@chakra-ui/icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart, faImages } from "@fortawesome/free-solid-svg-icons";
+import { faHeart, faImages, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { Pagination } from "./Pagination";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 
@@ -37,15 +38,28 @@ function SearchComponent() {
   }
 
   return (
-    <Flex>
-      <Select defaultValue={""} onChange={(e) => setCategory(e.target.value)}>
-        <option value="all">전체</option>
-        <option value="title">제목</option>
-        <option value="content">본문</option>
-      </Select>
-      <Input value={keyword} onChange={(e) => setKeyword(e.target.value)} />
-      <Button onClick={handleSearch}>검색</Button>
-    </Flex>
+    <Center>
+      <Flex gap={1} marginTop={5}>
+        <Box>
+          <Select
+            defaultValue={"all"}
+            onChange={(e) => setCategory(e.target.value)}
+          >
+            <option value="all">전체</option>
+            <option value="title">제목</option>
+            <option value="content">본문</option>
+          </Select>
+        </Box>
+        <Box>
+          <Input value={keyword} onChange={(e) => setKeyword(e.target.value)} />
+        </Box>
+        <Box>
+          <Button onClick={handleSearch}>
+            <FontAwesomeIcon icon={faSearch} />
+          </Button>
+        </Box>
+      </Flex>
+    </Center>
   );
 }
 
@@ -69,7 +83,7 @@ export function BoardList() {
   }
 
   return (
-    <Box marginTop={"35px"}>
+    <Box marginTop={5} mb={40}>
       <Heading>게시물 목록</Heading>
       <Box>
         <Table>

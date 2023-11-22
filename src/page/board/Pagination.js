@@ -1,4 +1,4 @@
-import { Box, Button } from "@chakra-ui/react";
+import { Box, Button, Center } from "@chakra-ui/react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -35,39 +35,41 @@ export function Pagination({ pageInfo }) {
   }
 
   return (
-    <Box>
-      {pageInfo.prevPageNumber > 0 && (
-        <PageButton pageNumber={1}>
-          <FontAwesomeIcon icon={faAnglesLeft} />
-        </PageButton>
-      )}
+    <Center marginTop={5}>
+      <Box>
+        {pageInfo.prevPageNumber > 0 && (
+          <PageButton pageNumber={1}>
+            <FontAwesomeIcon icon={faAnglesLeft} />
+          </PageButton>
+        )}
 
-      {pageInfo.prevPageNumber > 0 && (
-        <PageButton pageNumber={pageInfo.prevPageNumber}>
-          <FontAwesomeIcon icon={faChevronLeft} />
-        </PageButton>
-      )}
-      {pageNumbers.map((pageNumber) => (
-        <PageButton
-          key={pageNumber}
-          variant={
-            pageNumber === pageInfo.currentPageNumber ? "solid" : "ghost"
-          }
-          pageNumber={pageNumber}
-        >
-          {pageNumber}
-        </PageButton>
-      ))}
-      {pageInfo.nextPageNumber && (
-        <PageButton pageNumber={pageInfo.nextPageNumber}>
-          <FontAwesomeIcon icon={faChevronRight} />
-        </PageButton>
-      )}
-      {pageInfo.nextPageNumber && (
-        <PageButton pageNumber={pageInfo.lastPageNumber}>
-          <FontAwesomeIcon icon={faAnglesRight} />
-        </PageButton>
-      )}
-    </Box>
+        {pageInfo.prevPageNumber > 0 && (
+          <PageButton pageNumber={pageInfo.prevPageNumber}>
+            <FontAwesomeIcon icon={faChevronLeft} />
+          </PageButton>
+        )}
+        {pageNumbers.map((pageNumber) => (
+          <PageButton
+            key={pageNumber}
+            variant={
+              pageNumber === pageInfo.currentPageNumber ? "solid" : "ghost"
+            }
+            pageNumber={pageNumber}
+          >
+            {pageNumber}
+          </PageButton>
+        ))}
+        {pageInfo.nextPageNumber && (
+          <PageButton pageNumber={pageInfo.nextPageNumber}>
+            <FontAwesomeIcon icon={faChevronRight} />
+          </PageButton>
+        )}
+        {pageInfo.nextPageNumber && (
+          <PageButton pageNumber={pageInfo.lastPageNumber}>
+            <FontAwesomeIcon icon={faAnglesRight} />
+          </PageButton>
+        )}
+      </Box>
+    </Center>
   );
 }
