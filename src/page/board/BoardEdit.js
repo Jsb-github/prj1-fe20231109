@@ -24,6 +24,7 @@ import {
   ModalOverlay,
   Spinner,
   Switch,
+  Textarea,
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
@@ -130,7 +131,7 @@ function BoardEdit(props) {
 
           <FormControl mb={5}>
             <FormLabel>본문</FormLabel>
-            <Input
+            <Textarea
               value={board.content}
               onChange={(e) =>
                 updateBoard((draft) => {
