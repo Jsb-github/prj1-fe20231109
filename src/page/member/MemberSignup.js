@@ -346,7 +346,7 @@ function MemberSignup(props) {
                 colorScheme={emailAvailable ? "blue" : "red"}
                 isDisabled={!isEmail}
               >
-                이메일 중복확인
+                이메일 확인
               </Button>
             </Flex>
             <p>{emailMessage}</p>

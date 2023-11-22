@@ -20,6 +20,12 @@ import {
   Avatar,
   AvatarBadge,
   Flex,
+  Card,
+  Center,
+  CardHeader,
+  CardBody,
+  CardFooter,
+  Heading,
 } from "@chakra-ui/react";
 import axios from "axios";
 import { LoginContext } from "../../context/LoginProvider";
@@ -90,43 +96,53 @@ export function MemberView() {
   }
 
   return (
-    <Box>
-      <Flex>
-        <Stack direction="row" spacing={4}>
-          <Avatar>
-            <AvatarBadge />
-          </Avatar>
-        </Stack>
+    <Center>
+      <Card w={"lg"}>
+        <CardHeader>
+          <Flex gap={5}>
+            <Stack direction="row" spacing={4}>
+              <Avatar>
+                <AvatarBadge />
+              </Avatar>
+            </Stack>
 
-        <h1>{member.id}님 정보</h1>
-      </Flex>
+            <Heading>{member.id}님</Heading>
+          </Flex>
+        </CardHeader>
 
-      <FormControl>
-        <FormLabel>password</FormLabel>
-        <Input type="text" value={member.password} readOnly />
-      </FormControl>
-      <FormControl>
-        <FormLabel>별명</FormLabel>
-        <Input value={member.nickName} readOnly />
-      </FormControl>
-      <FormControl>
-        <FormLabel>email</FormLabel>
-        <Input value={member.email} readOnly />
-      </FormControl>
+        <CardBody>
+          <FormControl mb={2}>
+            <FormLabel>password</FormLabel>
+            <Input type="text" value={member.password} readOnly />
+          </FormControl>
 
-      {(hasAccess(member.id) || isAdmin()) && (
-        <Box>
-          <Button
-            colorScheme="purple"
-            onClick={() => navigate("/member/edit?" + params.toString())}
-          >
-            수정
-          </Button>
-          <Button colorScheme="red" onClick={onOpen}>
-            탈퇴
-          </Button>
-        </Box>
-      )}
+          <FormControl mb={2}>
+            <FormLabel>별명</FormLabel>
+            <Input value={member.nickName} readOnly />
+          </FormControl>
+
+          <FormControl mb={2}>
+            <FormLabel>email</FormLabel>
+            <Input value={member.email} readOnly />
+          </FormControl>
+        </CardBody>
+
+        <CardFooter>
+          {(hasAccess(member.id) || isAdmin()) && (
+            <Flex gap={2}>
+              <Button
+                colorScheme="purple"
+                onClick={() => navigate("/member/edit?" + params.toString())}
+              >
+                수정
+              </Button>
+              <Button colorScheme="red" onClick={onOpen}>
+                탈퇴
+              </Button>
+            </Flex>
+          )}
+        </CardFooter>
+      </Card>
 
       {/* 탈퇴 모달 */}
       <Modal isOpen={isOpen} onClose={onClose}>
@@ -144,6 +160,6 @@ export function MemberView() {
           </ModalFooter>
         </ModalContent>
       </Modal>
-    </Box>
+    </Center>
   );
 }
