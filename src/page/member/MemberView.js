@@ -1,7 +1,6 @@
 import { useNavigate, useSearchParams } from "react-router-dom";
 import React, { useContext, useEffect, useState } from "react";
 import {
-  Box,
   FormControl,
   FormLabel,
   Spinner,
@@ -26,6 +25,7 @@ import {
   CardBody,
   CardFooter,
   Heading,
+  Select,
 } from "@chakra-ui/react";
 import axios from "axios";
 import { LoginContext } from "../../context/LoginProvider";

@@ -18,7 +18,7 @@ import {
 } from "@chakra-ui/react";
 import axios from "axios";
 
-import { ChatIcon, SearchIcon } from "@chakra-ui/icons";
+import { ChatIcon } from "@chakra-ui/icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faImages, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { Pagination } from "./Pagination";

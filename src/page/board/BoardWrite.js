@@ -32,7 +32,11 @@ export function BoardWrite() {
     setIsSubmitting(true);
 
     axios
-      .postForm("/api/board/add", { title, content, uploadFiles })
+      .postForm("/api/board/add", {
+        title,
+        content,
+        uploadFiles,
+      })
       .then(() => {
         toast({
           description: "새글이 저장되었습니다.",
